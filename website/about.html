@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Nyirefami Limited</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <div class="logo-badge"><img src="logo.jpg" alt="Nyirefami Logo"></div>
+      <div class="company-title">Nyirefami Limited</div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+        <li><a href="order.html"><span data-i18n="nav_cart">Order Cart</span> <span id="cart-badge" class="cart-nav-badge">0</span></a></li>
+        <li><a href="mission.html" data-i18n="nav_mission">Mission</a></li>
+        <li><a href="about.html" class="active" data-i18n="nav_about">About Us</a></li>
+      </ul>
+      <select id="lang-switcher" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+      </select>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title" data-i18n="about_page_title">About Nyirefami Limited</h2>
+
+    <div class="grid-2" style="margin-bottom: 2rem;">
+      <div class="card">
+        <h3 data-i18n="about_heritage_title">Our Heritage</h3>
+        <p data-i18n="about_heritage_desc">Nyirefami Limited was established in 1981 as re-pack flour and other food stuffs. The company ownership is basically family enterprise with proprietorship registration of 1996 with certificate of registration from the Ministry of Industries and Trade No.50656.</p>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="about_keys_title">Keys to Success</h3>
+        <p data-i18n="about_keys_desc">Our competitive advantage lies in our careful personal touch in raw grain preparation, washing, stone extraction, and processing clean flours for local and export distribution.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 2.5rem;">
+      <h3 data-i18n="about_contact_title">Contact Information & Location</h3>
+      <p style="margin-top: 0.5rem;"><strong data-i18n="about_hq">Nyirefami Limited Headquarters</strong></p>
+      <p>P.O. Box 1443, Arusha, Tanzania</p>
+      <p style="margin-top: 0.5rem;"><strong data-i18n="about_tel">Telephone:</strong> +255 (0)27 250 7974</p>
+      <p><strong data-i18n="about_mob">Mobile:</strong> +255 (0)754 278149 / +255 (0)754 287707</p>
+      <p><strong data-i18n="about_email">Email:</strong> <a href="mailto:info@nyirefamiltd.co.tz?subject=Inquiry%20Regarding%20Nyirefami%20Products" style="color: var(--primary);">info@nyirefamiltd.co.tz</a></p>
+    </div>
+
+    <div class="card contact-callout-card" style="text-align: center; background: var(--light-bg); border: 2px dashed var(--accent-gold);">
+      <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💬</div>
+      <h3 style="color: var(--primary-dark); font-size: 1.4rem; margin-bottom: 0.4rem;" data-i18n="about_wa_title">Have a Question or Special Inquiry?</h3>
+      <p style="color: var(--text-muted); max-width: 550px; margin: 0 auto 1.2rem; font-size: 0.95rem;" data-i18n="about_wa_desc">
+        Whether you need custom grain quantities, wholesale partnerships, or product details, our team is ready to help you directly on WhatsApp.
+      </p>
+      <a href="https://wa.me/255754287707?text=Hello%20Nyirefami%20Team." 
+         id="whatsapp-chat-btn"
+         target="_blank" 
+         class="btn-primary" 
+         style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 24px;">
+        <span data-i18n="about_wa_btn">Chat with Us on WhatsApp</span> &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; Nyirefami Limited. Arusha, Tanzania.</p>
+    <p><span data-i18n="footer_orders">Direct Orders:</span> <a href="mailto:info@nyirefamiltd.co.tz?subject=Product%20Inquiry">info@nyirefamiltd.co.tz</a> | Tel: +255 (0)754 278149</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

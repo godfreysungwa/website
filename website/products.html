@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Catalog - Nyirefami Limited</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <div class="logo-badge">
+        <img src="logo.jpg" alt="Nyirefami Logo">
+      </div>
+      <div class="company-title">Nyirefami Limited</div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" class="active" data-i18n="nav_products">Products</a></li>
+        <li><a href="order.html"><span data-i18n="nav_cart">Order Cart</span> <span id="cart-badge" class="cart-nav-badge">0</span></a></li>
+        <li><a href="mission.html" data-i18n="nav_mission">Mission</a></li>
+        <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+      </ul>
+      <select id="lang-switcher" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+      </select>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title" data-i18n="catalog_title">Product Catalog</h2>
+
+    <!-- 3 Approved Products Grid -->
+    <div class="product-grid">
+
+      <!-- 1. Finger Millet Flour -->
+      <div id="ulezi" class="product-card">
+        <div>
+          <div class="product-img-container"><img src="03.jpg" alt="Finger Millet Flour"></div>
+          <span class="badge" data-i18n="prod_ulezi_badge">Finger Millet Flour</span>
+          <p data-i18n="prod_ulezi_desc">Traditional breakfast energizer; highly recommended for nursing mothers and postpartum recovery.</p>
+        </div>
+        <div>
+          <div class="product-options-row">
+            <div class="option-group">
+              <label style="font-weight: 800; color: var(--primary-dark);" data-i18n="lbl_pkg">Package Size</label>
+              <select id="ulezi-pkg" class="package-select">
+                <option value="0">1kg Bag</option><option value="1">2kg Bag</option><option value="2">5kg Bag</option><option value="3">10kg Bag</option>
+              </select>
+            </div>
+            <div class="option-group">
+              <label style="font-weight: 800; color: var(--primary-dark);" data-i18n="lbl_qty">Quantity</label>
+              <input type="number" id="ulezi-qty" class="quantity-input" value="1" min="1">
+            </div>
+          </div>
+          <button class="btn-primary" style="width: 100%;" onclick="addToCart('ulezi', document.getElementById('ulezi-pkg').value, 'ulezi-qty')" data-i18n="btn_add_cart">+ Add to Order Cart</button>
+        </div>
+      </div>
+
+      <!-- 2. Sorghum Flour -->
+      <div id="mtama" class="product-card">
+        <div>
+          <div class="product-img-container"><img src="03.jpg" alt="Sorghum Flour"></div>
+          <span class="badge" data-i18n="prod_mtama_badge">Sorghum Flour</span>
+          <p data-i18n="prod_mtama_desc">Great for stiff porridge and baking; beneficial for diabetic diets and fracture recovery.</p>
+        </div>
+        <div>
+          <div class="product-options-row">
+            <div class="option-group">
+              <label style="font-weight: 800; color: var(--primary-dark);" data-i18n="lbl_pkg">Package Size</label>
+              <select id="mtama-pkg" class="package-select">
+                <option value="0">1kg Bag</option><option value="1">2kg Bag</option><option value="2">5kg Bag</option><option value="3">10kg Bag</option>
+              </select>
+            </div>
+            <div class="option-group">
+              <label style="font-weight: 800; color: var(--primary-dark);" data-i18n="lbl_qty">Quantity</label>
+              <input type="number" id="mtama-qty" class="quantity-input" value="1" min="1">
+            </div>
+          </div>
+          <button class="btn-primary" style="width: 100%;" onclick="addToCart('mtama', document.getElementById('mtama-pkg').value, 'mtama-qty')" data-i18n="btn_add_cart">+ Add to Order Cart</button>
+        </div>
+      </div>
+
+      <!-- 3. Wheat Grain Flour -->
+      <div id="sooji" class="product-card">
+        <div>
+          <div class="product-img-container"><img src="03.jpg" alt="Wheat Grain Flour"></div>
+          <span class="badge" data-i18n="prod_sooji_badge">Wheat Grain Flour</span>
+          <p data-i18n="prod_sooji_desc">Nutritious option for babies aged 4+ months; ideal for cream cakes, macaroni, and desserts.</p>
+        </div>
+        <div>
+          <div class="product-options-row">
+            <div class="option-group">
+              <label style="font-weight: 800; color: var(--primary-dark);" data-i18n="lbl_pkg">Package Size</label>
+              <select id="sooji-pkg" class="package-select">
+                <option value="0">1kg Bag</option><option value="1">2kg Bag</option><option value="2">5kg Bag</option><option value="3">10kg Bag</option>
+              </select>
+            </div>
+            <div class="option-group">
+              <label style="font-weight: 800; color: var(--primary-dark);" data-i18n="lbl_qty">Quantity</label>
+              <input type="number" id="sooji-qty" class="quantity-input" value="1" min="1">
+            </div>
+          </div>
+          <button class="btn-primary" style="width: 100%;" onclick="addToCart('sooji', document.getElementById('sooji-pkg').value, 'sooji-qty')" data-i18n="btn_add_cart">+ Add to Order Cart</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Nyirefami Limited. Arusha, Tanzania.</p>
+    <p><span data-i18n="footer_orders">Direct Orders:</span> <a href="mailto:info@nyirefamiltd.co.tz">info@nyirefamiltd.co.tz</a> | Tel: +255 (0)754 278149</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

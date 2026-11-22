@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Cart - Nyirefami Limited</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <div class="logo-badge"><img src="logo.jpg" alt="Nyirefami Logo"></div>
+      <div class="company-title">Nyirefami Limited</div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+        <li><a href="order.html" class="active"><span data-i18n="nav_cart">Order Cart</span> <span id="cart-badge" class="cart-nav-badge">0</span></a></li>
+        <li><a href="mission.html" data-i18n="nav_mission">Mission</a></li>
+        <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+      </ul>
+      <select id="lang-switcher" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+      </select>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title" data-i18n="cart_page_title">Your Inquiry Cart</h2>
+
+    <div id="empty-cart-msg" class="card" style="text-align: center; padding: 3rem; display: none;">
+      <h3 data-i18n="cart_empty_title">Your cart is currently empty</h3>
+      <!--<p style="margin: 1rem 0 1.5rem; color: var(--text-muted);" data-i18n="cart_empty_desc">Explore our catalog of clean, stone-free cereal products and add items to your inquiry.</p>-->
+      <a href="products.html" class="btn-primary" data-i18n="cart_browse_btn">Browse Products</a>
+    </div>
+
+    <div id="cart-content-section" class="grid-2">
+      <!-- Left: Cart Items Table / List -->
+      <div class="card">
+        <h3 data-i18n="cart_req_title">Requested Items</h3>
+        
+        <!-- Desktop Table View -->
+        <div class="desktop-table-container cart-table-container" style="margin-top: 1rem;">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th data-i18n="th_prod">Product Name</th>
+                <th data-i18n="th_pkg">Package Size</th>
+                <th data-i18n="th_qty">Quantity</th>
+                <th data-i18n="th_act">Action</th>
+              </tr>
+            </thead>
+            <tbody id="cart-items-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Card List View -->
+        <div id="mobile-cart-items" class="mobile-cart-list" style="margin-top: 1rem;">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div style="margin-top: 1.5rem; font-weight: 700; color: var(--primary-dark);">
+          <span data-i18n="cart_total_lbl">Total Packages:</span> <span id="cart-total-packages">0</span>
+        </div>
+      </div>
+
+      <!-- Right: Customer Info & WhatsApp Submission Form -->
+      <div class="card">
+        <h3 data-i18n="form_title">Customer Details & Submission</h3>
+       <!-- <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem;" data-i18n="form_desc">Fill in your details below to submit your inquiry directly to our sales team via WhatsApp.</p>-->
+        
+        <form onsubmit="submitOrder(event)">
+          <div class="order-form-group">
+            <label for="cust-name" data-i18n="lbl_name">Full Name</label>
+            <input type="text" id="cust-name" required placeholder="e.g. Baraka Nyirenda">
+          </div>
+
+          <div class="order-form-group">
+            <label for="cust-phone" data-i18n="lbl_phone">Phone Number</label>
+            <input type="tel" id="cust-phone" required placeholder="e.g. +255 754 000 000">
+          </div>
+
+          <div class="order-form-group">
+            <label for="cust-location" data-i18n="lbl_loc">Delivery Location / City</label>
+            <input type="text" id="cust-location" required placeholder="e.g. Arusha (Njiro)">
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; text-align: center; background: #25D366; color: white;" data-i18n="btn_submit_wa">
+            💬 Submit Inquiry via WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Nyirefami Limited. Arusha, Tanzania.</p>
+    <p><span data-i18n="footer_orders">Direct Orders:</span> <a href="mailto:info@nyirefamiltd.co.tz">info@nyirefamiltd.co.tz</a> | Tel: +255 (0)754 278149</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

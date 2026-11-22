@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nyirefami Limited - Pure & Natural Cereals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <div class="logo-badge"><img src="logo.jpg" alt="Nyirefami Logo"></div>
+      <div class="company-title">Nyirefami Limited</div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+        <li><a href="order.html"><span data-i18n="nav_cart">Order Cart</span> <span id="cart-badge" class="cart-nav-badge">0</span></a></li>
+        <li><a href="mission.html" data-i18n="nav_mission">Mission</a></li>
+        <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+      </ul>
+      <select id="lang-switcher" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+      </select>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 data-i18n="hero_title">Pure and Natural</h1>
+    <p data-i18n="hero_sub">Premium quality milling and packaging of clean, stone free cereal flours in Arusha, Tanzania.</p>
+    <a href="products.html" class="btn-primary" data-i18n="hero_btn">Browse & Order Products</a>
+  </section>
+
+  <main class="container">
+    
+    <!-- Brief Mission Snapshot -->
+    <div class="card" style="margin-bottom: 3rem; background: linear-gradient(to right, #FFFFFF, #FAF6F0);">
+      <span class="badge" data-i18n="purpose_badge">Our Purpose</span>
+      <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" data-i18n="purpose_title">Nourishing Whole Families</h3>
+      <p style="font-size: 1.05rem;" data-i18n="purpose_desc">
+        Nyirefami Limited is dedicated to processing and packaging high quality cereal flours for all household income levels, with special emphasis on baby and family nutrition.
+      </p>
+      <a href="mission.html" style="display: inline-block; margin-top: 1rem; color: var(--primary); font-weight: 700; text-decoration: none;" data-i18n="purpose_link">Read Mission Statement &rarr;</a>
+    </div>
+
+    <!-- Top Selling Cereals (3x1 Row on Mobile) -->
+    <h2 class="section-title" data-i18n="essential_title">Our Essential Products</h2>
+    <div class="grid-3 essential-products-row" style="margin-top: 1.5rem; margin-bottom: 3rem;">
+      
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="badge" data-i18n="prod_ulezi_badge">Finger Millet Flour</span>
+          <p data-i18n="ess_ulezi_desc">Rich in natural calcium and iron, our top choice for energizing family porridge and nursing mothers.</p>
+        </div>
+        <div style="margin-top: 1rem;">
+          <a href="products.html#ulezi" class="btn-primary essential-btn" data-i18n="btn_order_ulezi">Order Ulezi</a>
+        </div>
+      </div>
+
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="badge" data-i18n="prod_mtama_badge">Sorghum Flour</span>
+          <p data-i18n="ess_mtama_desc">Finely milled from selected domestic grains, packed with dietary fiber for wholesome ugali and baking.</p>
+        </div>
+        <div style="margin-top: 1rem;">
+          <a href="products.html#mtama" class="btn-primary essential-btn" data-i18n="btn_order_mtama">Order Mtama</a>
+        </div>
+      </div>
+
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="badge" data-i18n="prod_sooji_badge">Wheat Grain Flour</span>
+          <p data-i18n="ess_sooji_desc">Graded wheat semolina ideal for growing children aged 4+ months, soft cakes, and creamy desserts.</p>
+        </div>
+        <div style="margin-top: 1rem;">
+          <a href="products.html#sooji" class="btn-primary essential-btn" data-i18n="btn_order_sooji">Order Sooji</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Executive Leadership & Management Section -->
+    <div style="margin-bottom: 4rem;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 class="section-title" data-i18n="exec_title">Executive Leadership & Management</h2>
+      </div>
+
+      <div class="management-grid">
+        <div class="card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid var(--accent-gold); margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background: var(--light-bg); display: flex; align-items: center; justify-content: center;">
+            <img src="logo.jpg" alt="Edina Nyirenda" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h3 style="color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 0.3rem;">Edina Nyirenda</h3>
+          <div style="color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="role_founder">Founder</div>
+        </div>
+
+        <div class="card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid var(--accent-gold); margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background: var(--light-bg); display: flex; align-items: center; justify-content: center;">
+            <img src="logo.jpg" alt="Marsha Nyirenda" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h3 style="color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 0.3rem;">Marsha Nyirenda</h3>
+          <div style="color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="role_ceo">CEO</div>
+        </div>
+
+        <div class="card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid var(--accent-gold); margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background: var(--light-bg); display: flex; align-items: center; justify-content: center;">
+            <img src="logo.jpg" alt="Robert Nyirenda" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h3 style="color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 0.3rem;">Robert Nyirenda</h3>
+          <div style="color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="role_md">Managing Director</div>
+        </div>
+
+        <div class="card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid var(--accent-gold); margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background: var(--light-bg); display: flex; align-items: center; justify-content: center;">
+            <img src="logo.jpg" alt="James Nyirenda" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h3 style="color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 0.3rem;">James Nyirenda</h3>
+          <div style="color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="role_od">Operations Director</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brief Company History Snapshot -->
+    <div class="grid-2">
+      <div class="card">
+        <h3 data-i18n="hist_title">Established in Arusha</h3>
+        <p data-i18n="hist_desc">Originally established in 1981 as re-pack flour and re-registered in 1991 under Certificate No. 50656, we have over four decades of heritage in milling clean cereal products.</p>
+        <br>
+        <a href="about.html" style="color: var(--primary); font-weight: 700; text-decoration: none;" data-i18n="hist_link">Read Full History &rarr;</a>
+      </div>
+      
+      <div class="card">
+        <h3 data-i18n="qual_title">Quality & Hygiene Vow</h3>
+        <p data-i18n="qual_desc">Our personal touch in grain washing, stone extraction, and hygienic packaging ensures every bag delivered is pure and spotless.</p>
+        <br>
+        <a href="about.html" style="color: var(--primary); font-weight: 700; text-decoration: none;" data-i18n="qual_link">Contact Details &rarr;</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; Nyirefami Limited. Arusha, Tanzania.</p>
+    <p><span data-i18n="footer_orders">Direct Orders:</span> <a href="mailto:info@nyirefamiltd.co.tz">info@nyirefamiltd.co.tz</a> | Tel: +255 (0)754 278149</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

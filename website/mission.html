@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission & Vision - Nyirefami Limited</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <div class="logo-badge"><img src="logo.jpg" alt="Nyirefami Logo"></div>
+      <div class="company-title">Nyirefami Limited</div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+        <li><a href="order.html"><span data-i18n="nav_cart">Order Cart</span> <span id="cart-badge" class="cart-nav-badge">0</span></a></li>
+        <li><a href="mission.html" class="active" data-i18n="nav_mission">Mission</a></li>
+        <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+      </ul>
+      <select id="lang-switcher" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+      </select>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title" data-i18n="mission_page_title">Our Mission & Core Values</h2>
+
+    <div class="grid-2" style="margin-bottom: 3rem;">
+      <div class="card">
+        <h3 data-i18n="mission_core_title">Our Core Mission</h3>
+        <p data-i18n="mission_core_desc">To process, mill, and package premium, stone-free cereal flours that provide wholesome nutrition to families across Tanzania and beyond, while maintaining uncompromising standards of hygiene and customer trust.</p>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="mission_vision_title">Our Vision</h3>
+        <p data-i18n="mission_vision_desc">To be the leading household milling enterprise recognized for excellence in family health, infant nutrition, and sustainable agricultural processing.</p>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(to right, #FFFFFF, #FAF6F0);">
+      <h3 data-i18n="mission_family_title">Family & Baby Nutrition Commitment</h3>
+      <p style="margin-top: 0.8rem;" data-i18n="mission_family_desc">
+        Since our establishment in 1981, we have prioritized the health of nursing mothers and growing children. Our specialized flours like Finger Millet (Ulezi) and Wheat Semolina (Sooji) are carefully washed and milled to ensure safe, digestible, and nutrient-dense meals for every stage of life.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Nyirefami Limited. Arusha, Tanzania.</p>
+    <p><span data-i18n="footer_orders">Direct Orders:</span> <a href="mailto:info@nyirefamiltd.co.tz">info@nyirefamiltd.co.tz</a> | Tel: +255 (0)754 278149</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
