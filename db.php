@@ -1,9 +1,9 @@
 <?php
 // db.php
 $host     = 'localhost';
-$dbname   = 'nyirefami_db';
+$dbname   = '';
 $username = 'root';
-$password = '766Freys$';
+$password = '';
 $charset  = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
