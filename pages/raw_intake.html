@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Raw Material Intake</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/package_inventory.css" />
+  <style>
+    .full-width { grid-column: 1 / -1; }
+    .alert-success {
+      grid-column: 1 / -1;
+      background-color: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item active">
+        <details class="sidebar-accordion" open>
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html" class="sub-link-active"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item"><a href="device.html" class="menu-link"><div class="link-left"><i data-lucide="cpu"></i> 2. Device Management</div></a></li>
+      <li class="menu-item"><a href="excel.html" class="menu-link"><div class="link-left"><i data-lucide="file-spreadsheet"></i> 3. System Reports</div></a></li>
+    </ul>
+
+    <!-- AFTER (Dynamic) -->
+     <div class="sidebar-footer">
+       <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+        <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+         <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+        </a>
+        <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+        </div>
+  </aside>
+
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Raw Material Intake</h1>
+      <!--  <p>Log incoming raw crop deliveries from suppliers and farmers.</p>-->
+      </div>
+      <div class="user-badge"><i data-lucide="truck"></i> Receiving & Intake</div>
+    </div>
+
+    <!-- FORM CARD -->
+    <section class="form-container-card">
+      <div class="card-header">
+        <h2><i data-lucide="truck"></i> Raw Material Receiving Form</h2>
+      </div>
+
+      <form id="rawIntakeForm" class="portal-form" action="save_raw_intake.php" method="POST">
+        <div class="form-grid">
+
+          <!-- Success Alert -->
+          <div id="successAlert" class="alert-success" style="display: none;">
+            <i data-lucide="check-circle"></i> Raw material intake record saved successfully!
+          </div>
+          
+          <!-- Delivery Date -->
+          <div class="form-group">
+            <label for="transactionDate"><i data-lucide="calendar" class="label-icon"></i> Delivery Date</label>
+            <input type="date" id="transactionDate" name="transactionDate" required />
+          </div>
+
+          <!-- Batch No -->
+          <div class="form-group">
+            <label for="batchNo"><i data-lucide="barcode" class="label-icon"></i> Intake Batch No.</label>
+            <input type="text" id="batchNo" name="batchNo" placeholder="e.g., INTAKE-2026-001" required />
+          </div>
+
+          <!-- Updated Crop Type Selection -->
+          <div class="form-group">
+            <label for="cropType"><i data-lucide="wheat" class="label-icon"></i> Raw Crop Type</label>
+            <select id="cropType" name="cropType" required>
+              <option value="" disabled selected>Select crop type</option>
+              <option value="Ulezi">Ulezi (Finger Millet)</option>
+               <option value="Uwele">Uwele (Pearl Millet)</option>
+              <option value="Mtama">Mtama (Sorghum)</option>
+              <option value="Sooji Chenga">Sooji Chenga</option> -->
+              <option value="Maize">Maize</option>
+              <option value="Yellow Corn">Yellow Corn</option>
+              <option value="Ngano">Ngano</option>
+              <option value="Sooji">Sooji</option>
+              <option value="Ndizi">Ndizi (Banana)</option>
+             <!-- <option value="Other">Other</option>-->
+            </select>
+          </div>
+
+          <!-- Supplier Name -->
+          <div class="form-group">
+            <label for="supplierName"><i data-lucide="user" class="label-icon"></i> Supplier / Farmer Name</label>
+            <input type="text" id="supplierName" name="supplierName" placeholder="Enter supplier name" required />
+          </div>
+
+          <!-- Quantity / Weight -->
+          <div class="form-group">
+            <label for="grossWeight"><i data-lucide="scale" class="label-icon"></i> Quantity / Weight</label>
+            <input type="number" id="grossWeight" name="grossWeight" placeholder="0.00" step="0.01" min="0.01" required />
+          </div>
+
+          <!-- Measurement Unit Dropdown -->
+          <div class="form-group">
+            <label for="measurementUnit"><i data-lucide="ruler" class="label-icon"></i> Measurement Unit</label>
+            <select id="measurementUnit" name="measurementUnit" required>
+              <option value="Kg" selected>Kilograms (Kg)</option>
+              <option value="Bag">Bags</option>
+            </select>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group full-width">
+            <label for="notes"><i data-lucide="file-text" class="label-icon"></i> Remarks / Delivery Notes</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Enter quality remarks or condition details..."></textarea>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="btn-secondary">Reset</button>
+          <button type="submit" class="btn-primary-green"><i data-lucide="save"></i> Save Raw Material Delivery</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Show success alert if redirected back with ?status=success
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('status') === 'success') {
+      document.getElementById('successAlert').style.display = 'flex';
+    }
+    // Check session and update user name on load
+function checkUserSession() {
+  fetch('get_dashboard_stats.php')
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'unauthorized') {
+        window.location.href = 'login.html';
+        return;
+      }
+      if (data.status === 'success' && data.user) {
+        const sidebarUserEl = document.getElementById('sidebarUserName');
+        if (sidebarUserEl) {
+          sidebarUserEl.textContent = data.user.full_name;
+        }
+      }
+    })
+    .catch(err => console.error('Session check error:', err));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checkUserSession();
+});
+  </script>
+</body>
+</html>

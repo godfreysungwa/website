@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Cleaning & Sorting</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/cleaning.css" />
+  <style>
+    .alert-box {
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+    .alert-success { background-color: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+    .alert-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      color: #166534;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item active">
+        <details class="sidebar-accordion" open>
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html" class="sub-link-active"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item"><a href="device.html" class="menu-link"><div class="link-left"><i data-lucide="cpu"></i> 2. Device Management</div></a></li>
+      <li class="menu-item"><a href="excel.html" class="menu-link"><div class="link-left"><i data-lucide="file-spreadsheet"></i> 3. System Reports</div></a></li>
+    </ul>
+
+    <!-- AFTER (Dynamic) -->
+     <div class="sidebar-footer">
+       <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+         <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+           <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+        </a>
+         <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+      </div>
+  </aside>
+
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Cleaning & Sorting</h1>
+      </div>
+      <div class="user-badge"><i data-lucide="sparkles"></i> Cleaning Operations</div>
+    </div>
+
+    <section class="form-container-card">
+      <div class="card-header">
+        <h2><i data-lucide="filter"></i> Grain Cleaning Log</h2>
+      </div>
+
+      <!-- Status Alerts -->
+      <div id="statusAlert" style="display: none;"></div>
+
+      <form id="cleaningForm" class="portal-form" action="save_cleaning.php" method="POST">
+        <div class="form-grid">
+          
+          <!-- Cleaning Batch No. -->
+          <div class="form-group">
+            <label for="cleaningBatchNo"><i data-lucide="qr-code" class="label-icon"></i> Cleaning Batch No.</label>
+            <input type="text" id="cleaningBatchNo" name="cleaningBatchNo" placeholder="e.g., CLN-2026-001" required />
+          </div>
+
+          <!-- Cleaning Date Picker -->
+          <div class="form-group">
+            <label for="cleaningDate"><i data-lucide="calendar" class="label-icon"></i> Choose Cleaning Date</label>
+            <input type="date" id="cleaningDate" name="cleaningDate" required />
+          </div>
+
+          <!-- Raw Crop Source Dropdown -->
+          <div class="form-group">
+            <label for="rawSource"><i data-lucide="wheat" class="label-icon"></i> Raw Crop Source</label>
+            <select id="rawSource" name="rawSource" required>
+              <option value="" disabled selected>Select raw crop source</option>
+              <option value="Ulezi">Ulezi (Finger Millet)</option>
+              <option value="Uwele">Uwele (Pearl Millet)</option>
+              <option value="Mtama">Mtama (Sorghum)</option>
+              <option value="Sooji Chenga">Sooji Chenga</option>
+              <option value="Maize">Maize</option>
+              <option value="Yellow Corn">Yellow Corn</option>
+              <option value="Ngano">Ngano</option>
+              <option value="Sooji">Sooji</option>
+             <option value="Ndizi">Ndizi (Banana)</option>
+             <!-- <option value="Other">Other</option>-->
+            </select>
+            <!-- Available Stock Display -->
+            <div id="stockBadge" class="stock-badge" style="display: none;">
+              <i data-lucide="database" style="width: 14px; height: 14px;"></i>
+              <span>Available Intake Stock: <strong id="availableStockVal">0.00</strong> <span class="unit-label">kg</span></span>
+            </div>
+          </div>
+
+          <!-- Measurement Unit -->
+          <div class="form-group">
+            <label for="measurementUnit"><i data-lucide="layers" class="label-icon"></i> Measurement Unit</label>
+            <select id="measurementUnit" name="measurementUnit" required>
+              <option value="Kg" selected>Kilograms (Kg)</option>
+              <option value="Bag">Bags</option>
+            </select>
+          </div>
+
+          <!-- Raw Input Quantity -->
+          <div class="form-group">
+            <label for="rawInput"><i data-lucide="arrow-down-left" class="label-icon"></i> Raw Input Quantity (<span class="unit-label">Kg</span>)</label>
+            <input type="number" step="0.01" id="rawInput" name="rawInput" placeholder="0.00" min="0.01" required />
+          </div>
+
+          <!-- Cleaned Material Output -->
+          <div class="form-group">
+            <label for="cleanedOutput"><i data-lucide="arrow-up-right" class="label-icon"></i> Cleaned Material Output (<span class="unit-label">Kg</span>)</label>
+            <input type="number" step="0.01" id="cleanedOutput" name="cleanedOutput" placeholder="0.00" min="0" required />
+          </div>
+
+          <!-- Wasted During Cleaning (Auto-calculated) -->
+          <div class="form-group full-width" style="margin-top: 0.5rem;">
+            <label for="wastedAmount"><i data-lucide="trash-2" class="label-icon"></i> Wasted During Cleaning (<span class="unit-label">Kg</span>) — Auto calculated</label>
+            <input type="number" step="0.01" id="wastedAmount" name="wastedAmount" placeholder="0.00" readonly style="background-color: #f3f4f6; cursor: not-allowed; font-weight: 700; color: #dc2626;" />
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary-green"><i data-lucide="save"></i> Save Cleaning Log</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    let currentAvailableStock = 0;
+
+    const unitSelect = document.getElementById('measurementUnit');
+    const unitLabels = document.querySelectorAll('.unit-label');
+    const rawInput = document.getElementById('rawInput');
+    const cleanedOutput = document.getElementById('cleanedOutput');
+    const wastedAmount = document.getElementById('wastedAmount');
+    const rawSource = document.getElementById('rawSource');
+    const stockBadge = document.getElementById('stockBadge');
+    const availableStockVal = document.getElementById('availableStockVal');
+    const statusAlert = document.getElementById('statusAlert');
+
+    // 1. Display URL status and error alert messages
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('status') === 'success') {
+      statusAlert.className = 'alert-box alert-success';
+      statusAlert.innerHTML = '<i data-lucide="check-circle"></i> Cleaning log saved successfully!';
+      statusAlert.style.display = 'flex';
+      lucide.createIcons();
+    } else if (urlParams.get('error')) {
+      statusAlert.className = 'alert-box alert-error';
+      statusAlert.innerHTML = '<i data-lucide="alert-triangle"></i> ' + decodeURIComponent(urlParams.get('error'));
+      statusAlert.style.display = 'flex';
+      lucide.createIcons();
+    }
+
+    // 2. Default to today's date
+    document.getElementById('cleaningDate').valueAsDate = new Date();
+
+    // 3. Dynamically update unit labels across the form
+    unitSelect.addEventListener('change', function() {
+      const selectedUnit = this.value;
+      unitLabels.forEach(label => {
+        label.textContent = selectedUnit;
+      });
+    });
+
+    // 4. Real-time waste calculation: Wasted = Input - Cleaned Output
+    function calculateWaste() {
+      const inputVal = parseFloat(rawInput.value) || 0;
+      const outputVal = parseFloat(cleanedOutput.value) || 0;
+
+      if (rawInput.value !== '' && cleanedOutput.value !== '') {
+        const waste = inputVal - outputVal;
+        wastedAmount.value = waste >= 0 ? waste.toFixed(2) : '0.00';
+      } else {
+        wastedAmount.value = '';
+      }
+    }
+
+    rawInput.addEventListener('input', calculateWaste);
+    cleanedOutput.addEventListener('input', calculateWaste);
+
+    // 5. Fetch remaining intake stock (gross_weight - raw_input) when crop is selected
+    rawSource.addEventListener('change', function() {
+      const crop = this.value;
+      if (!crop) return;
+
+      fetch(`get_crop_info.php?crop=${encodeURIComponent(crop)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            currentAvailableStock = parseFloat(data.remaining_stock) || 0;
+            availableStockVal.textContent = currentAvailableStock.toFixed(2);
+            stockBadge.style.display = 'inline-flex';
+            
+            if (data.unit) {
+              unitSelect.value = data.unit;
+              unitLabels.forEach(label => label.textContent = data.unit);
+            }
+          } else {
+            currentAvailableStock = 0;
+            availableStockVal.textContent = '0.00';
+            stockBadge.style.display = 'inline-flex';
+          }
+        })
+        .catch(err => {
+          currentAvailableStock = 0;
+          stockBadge.style.display = 'none';
+        });
+    });
+
+    // 6. Frontend validation before submission to prevent exceeding available stock
+    document.getElementById('cleaningForm').addEventListener('submit', function(e) {
+      const inputVal = parseFloat(rawInput.value) || 0;
+      if (inputVal > currentAvailableStock) {
+        e.preventDefault();
+        alert(`Error: Input quantity (${inputVal.toFixed(2)}) exceeds available intake stock (${currentAvailableStock.toFixed(2)})!`);
+      }
+    });
+    // Check session and update user name on load
+function checkUserSession() {
+  fetch('get_dashboard_stats.php')
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'unauthorized') {
+        window.location.href = 'login.html';
+        return;
+      }
+      if (data.status === 'success' && data.user) {
+        const sidebarUserEl = document.getElementById('sidebarUserName');
+        if (sidebarUserEl) {
+          sidebarUserEl.textContent = data.user.full_name;
+        }
+      }
+    })
+    .catch(err => console.error('Session check error:', err));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checkUserSession();
+});
+  </script>
+</body>
+</html>

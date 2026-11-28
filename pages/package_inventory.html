@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Packaging & Consumables</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/package_inventory.css" />
+  <style>
+    .status-alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item active">
+        <details class="sidebar-accordion" open>
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html" class="sub-link-active"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item"><a href="device.html" class="menu-link"><div class="link-left"><i data-lucide="cpu"></i> Device Management</div></a></li>
+      <li class="menu-item"><a href="excel.html" class="menu-link"><div class="link-left"><i data-lucide="file-spreadsheet"></i> System Reports</div></a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+       <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+        <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+        <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+         </a>
+         <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Packaging & Consumables</h1>
+      </div>
+      <div class="user-badge"><i data-lucide="box"></i> Packaging Store</div>
+    </div>
+
+    <!-- PACKAGING FORM CARD -->
+    <section class="form-container-card">
+      <div class="card-header">
+        <h2><i data-lucide="package-plus"></i> Packaging Stock Movement</h2>
+      </div>
+
+      <!-- Notification Alert -->
+      <div id="statusAlert" class="status-alert"></div>
+
+      <form id="packagingForm" class="portal-form">
+        
+        <!-- SECTION 0: PRIMARY TRANSACTION DETAILS -->
+        <div class="form-section">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="transactionDate"><i data-lucide="calendar"></i> Transaction Date</label>
+              <input type="date" id="transactionDate" name="transactionDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="movementType"><i data-lucide="arrow-left-right"></i> Movement Type</label>
+              <select id="movementType" name="movementType" required>
+                <option value="" disabled selected>Select movement type</option>
+                <option value="Stock Received" selected>Stock Received</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="batchNo"><i data-lucide="barcode"></i> Batch No.</label>
+              <input type="text" id="batchNo" name="batchNo" placeholder="e.g., BATCH-2026-088" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 1: GENERAL PROPERTY -->
+        <div class="form-section">
+          <div class="section-banner">
+            <i data-lucide="layers"></i>
+            <span>Part 1: General Property</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="woodGlue"><i data-lucide="droplet"></i> Wood Glue (Liters)</label>
+              <input type="number" id="woodGlue" name="woodGlue" placeholder="0" step="0.01" min="0" />
+            </div>
+
+            <div class="form-group">
+              <label for="polytheneBags"><i data-lucide="package"></i> Polythene Bags (Pcs)</label>
+              <input type="number" id="polytheneBags" name="polytheneBags" placeholder="0" min="0" />
+            </div>
+
+            <div class="form-group">
+              <label for="plainBox"><i data-lucide="box"></i> Plain Box (Cartons)</label>
+              <input type="number" id="plainBox" name="plainBox" placeholder="0" min="0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: SPECIFIC PROPERTIES -->
+        <div class="form-section">
+          <div class="section-banner">
+            <i data-lucide="sliders"></i>
+            <span>Part 2: Specific Properties</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="targetProduct"><i data-lucide="wheat"></i> Target Finished Product</label>
+              <select id="targetProduct" name="targetProduct">
+                <option value="" selected>Select finished product (Optional for Consumed)</option>
+                <option value="Maize Sembe">Maize Sembe</option>
+                <option value="Maize Dona">Maize Dona</option>
+                <option value="White Kashisha">White Kashisha</option>
+                <option value="Yellow Sembe">Yellow Sembe</option>
+                <option value="Yellow Dona">Yellow Dona</option>
+                <option value="Yellow Kashisha">Yellow Kashisha</option>
+                <option value="Ulezi Flour">Finger Millet (Ulezi)</option>
+                <option value="Uwele Flour">Pearl Millet (Uwele)</option>
+                <option value="Sooji Flour">Sooji</option>
+                <option value="Sooji Chenga Flour">Sooji Chenga</option>
+                <option value="Ndizi Flour">Dried Banana (Ndizi)</option>
+                <option value="Ngano Flour">Ngano Flour</option>
+                <option value="Mtama Flour">Sorghum (Mtama)</option>
+              </select>
+            </div>
+
+            <!-- RETAIL PAPER BAGS (1kg & 2kg) -->
+            <div class="form-group">
+              <label for="paperBagSize"><i data-lucide="shopping-bag"></i> Specific Paper Bag Size</label>
+              <select id="paperBagSize" name="paperBagSize">
+                <option value="" selected>Select paper bag size</option>
+                <option value="1kg">1 kg Bag</option>
+                <option value="2kg">2 kg Bag</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="paperBagQty"><i data-lucide="archive"></i> Paper Bag Quantity</label>
+              <input type="number" id="paperBagQty" name="paperBagQty" placeholder="0" min="0" />
+            </div>
+
+            <!-- BULK / WHOLESALE BAGS (5kg to 30kg) -->
+            <div class="form-group">
+              <label for="bulkBagSize"><i data-lucide="package-plus"></i> Bulk / Wholesale Bag Size</label>
+              <select id="bulkBagSize" name="bulkBagSize">
+                <option value="" selected>Select bulk bag size</option>
+                <option value="5kg">5 kg Bulk Bag</option>
+                <option value="10kg">10 kg Bulk Bag</option>
+                <option value="15kg">15 kg Bulk Bag</option>
+                <option value="20kg">20 kg Bulk Bag</option>
+                <option value="25kg">25 kg Bulk Bag</option>
+                <option value="30kg">30 kg Bulk Bag</option>
+                <option value="35kg">35 kg Bulk Bag</option>
+                <option value="40kg">40 kg Bulk Bag</option>
+                <option value="45kg">45 kg Bulk Bag</option>
+                <option value="50kg">50 kg Bulk Bag</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="bulkBagQty"><i data-lucide="archive"></i> Bulk Bag Quantity</label>
+              <input type="number" id="bulkBagQty" name="bulkBagQty" placeholder="0" min="0" />
+            </div>
+
+            <div class="form-group">
+              <label for="boxType"><i data-lucide="archive"></i> Specific Box Type</label>
+              <input type="text" id="boxType" name="boxType" placeholder="Auto-filled with Product Name" />
+            </div>
+
+            <div class="form-group">
+              <label for="boxQty"><i data-lucide="box"></i> Specific Box Quantity</label>
+              <input type="number" id="boxQty" name="boxQty" placeholder="0" min="0" />
+            </div>
+
+            <div class="form-group">
+              <label for="plasticContainers"><i data-lucide="container"></i> Plastic Container</label>
+              <input type="number" id="plasticContainers" name="plasticContainers" placeholder="0" min="0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: NOTES & REMARKS -->
+        <div class="form-group full-width">
+          <label for="notes"><i data-lucide="file-text"></i> Notes / Remarks</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="Enter any additional notes or specification details..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="btn-secondary" id="resetBtn">Reset</button>
+          <button type="submit" class="btn-primary-green" id="submitBtn"><i data-lucide="save"></i> Update Bag Inventory</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const transactionDate     = document.getElementById('transactionDate');
+    const targetProductSelect = document.getElementById('targetProduct');
+    const paperBagSizeSelect  = document.getElementById('paperBagSize');
+    const paperBagQtyInput    = document.getElementById('paperBagQty');
+    const bulkBagSizeSelect   = document.getElementById('bulkBagSize');
+    const bulkBagQtyInput     = document.getElementById('bulkBagQty');
+    const boxTypeInput        = document.getElementById('boxType');
+    const packagingForm       = document.getElementById('packagingForm');
+    const statusAlert         = document.getElementById('statusAlert');
+    const submitBtn           = document.getElementById('submitBtn');
+
+    // Default Date
+    transactionDate.value = new Date().toISOString().split('T')[0];
+
+    const sizeOneKgGroup = ['Finger Millet', 'Uwele Flour', 'Ulezi Flour', 'Pearl Millet', 'Wheat Flour', 'Sooji Flour', 'Mtama Flour', 'Ndizi Flour', 'Dried Banana'];
+    const sizeTwoKgGroup = [
+      'Maize Sembe',
+      'Maize Dona',
+      'White Kashisha',
+      'Yellow Sembe',
+      'Yellow Dona',
+      'Yellow Kashisha',
+      'Ngano Flour'
+    ];
+
+    // Target Product Change Event
+    targetProductSelect.addEventListener('change', function() {
+      const selectedProduct = this.value;
+      if (selectedProduct) {
+        if (selectedProduct === 'Sooji Chenga' || selectedProduct === 'Sooji Chenga Flour') {
+          boxTypeInput.value = 'Plain Box / Container';
+        } else {
+          boxTypeInput.value = selectedProduct + ' Box';
+        }
+
+        // Only auto-select retail size if no bulk bag is currently selected
+        if (!bulkBagSizeSelect.value) {
+          if (selectedProduct === 'Sooji Chenga' || selectedProduct === 'Sooji Chenga Flour') {
+            paperBagSizeSelect.value = '';
+          } else if (sizeOneKgGroup.includes(selectedProduct)) {
+            paperBagSizeSelect.value = '1kg';
+          } else if (sizeTwoKgGroup.includes(selectedProduct)) {
+            paperBagSizeSelect.value = '2kg';
+          }
+        }
+      } else {
+        boxTypeInput.value = '';
+      }
+    });
+
+    packagingForm.addEventListener('reset', function() {
+      setTimeout(() => {
+        boxTypeInput.value = '';
+        transactionDate.value = new Date().toISOString().split('T')[0];
+      }, 0);
+    });
+
+    // --- MUTUAL EXCLUSIVITY LOGIC FOR BAGS ---
+    // If worker selects a bulk bag, clear out retail paper bag fields
+    bulkBagSizeSelect.addEventListener('change', function() {
+      if (this.value) {
+        paperBagSizeSelect.value = '';
+        paperBagQtyInput.value = '';
+      }
+    });
+
+    // If worker selects a retail paper bag, clear out bulk bag fields
+    paperBagSizeSelect.addEventListener('change', function() {
+      if (this.value) {
+        bulkBagSizeSelect.value = '';
+        bulkBagQtyInput.value = '';
+      }
+    });
+
+    // Form Submission
+    packagingForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Updating Stock...';
+
+      const formData = new FormData(packagingForm);
+
+      fetch('save_package.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="save"></i> Update Bag Inventory';
+        lucide.createIcons();
+
+        statusAlert.style.display = 'block';
+
+        if (data.status === 'success') {
+          statusAlert.style.backgroundColor = '#d1fae5';
+          statusAlert.style.color = '#065f46';
+          statusAlert.style.border = '1px solid #34d399';
+          statusAlert.innerHTML = '✔ ' + data.message;
+          packagingForm.reset();
+        } else {
+          statusAlert.style.backgroundColor = '#fee2e2';
+          statusAlert.style.color = '#991b1b';
+          statusAlert.style.border = '1px solid #f87171';
+          statusAlert.innerHTML = '✖ ' + data.message;
+        }
+
+        setTimeout(() => {
+          statusAlert.style.display = 'none';
+        }, 5000);
+      })
+      .catch(error => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="save"></i> Update Bag Inventory';
+        lucide.createIcons();
+
+        statusAlert.style.display = 'block';
+        statusAlert.style.backgroundColor = '#fee2e2';
+        statusAlert.style.color = '#991b1b';
+        statusAlert.style.border = '1px solid #f87171';
+        statusAlert.innerHTML = '✖ System Error: Could not connect to the server.';
+      });
+    });
+
+    // Check session and update user name on load
+    function checkUserSession() {
+      fetch('get_dashboard_stats.php')
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'unauthorized') {
+            window.location.href = 'login.html';
+            return;
+          }
+          if (data.status === 'success' && data.user) {
+            const sidebarUserEl = document.getElementById('sidebarUserName');
+            if (sidebarUserEl) {
+              sidebarUserEl.textContent = data.user.full_name;
+            }
+          }
+        })
+        .catch(err => console.error('Session check error:', err));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkUserSession();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+/* ==========================================================================
+   EXCEL REPORTS PAGE STYLES (Fits inside main-wrapper)
+   ========================================================================== */
+
+/* Remove page container overrides to respect dashboard layout */
+body {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-color, #f1f5f9);
+}
+
+.reports-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 32px;
+}
+
+.reports-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.reports-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.reports-sub {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.reports-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.report-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.report-box:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.report-details {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.report-type-icon {
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.report-type-icon.text-green {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+.report-type-icon.text-gold {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.report-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.report-card-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.date-filter-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+  background-color: #f8fafc;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-field label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.date-field input[type="date"] {
+  padding: 8px 10px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: #0f172a;
+  background-color: #ffffff;
+  outline: none;
+  width: 100%;
+}
+
+.date-field input[type="date"]:focus {
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.report-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.btn-green {
+  background-color: #059669;
+  box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.25);
+}
+
+.btn-green:hover {
+  background-color: #047857;
+}
+
+.btn-gold {
+  background-color: #d97706;
+  box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.25);
+}
+
+.btn-gold:hover {
+  background-color: #b45309;
+}
+
+.report-btn:active {
+  transform: translateY(1px);
+}

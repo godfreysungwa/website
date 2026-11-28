@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Excel Reports Portal</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/excel.css" />
+  <style>
+    .reports-page-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .report-box {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.75rem;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .report-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .report-card-desc {
+      font-size: 0.88rem;
+      color: #6b7280;
+      margin-bottom: 1.25rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.35rem;
+    }
+    .form-group select, .form-group input {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background-color: #f9fafb;
+    }
+    .date-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item">
+        <details class="sidebar-accordion">
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item"><a href="device.html" class="menu-link"><div class="link-left"><i data-lucide="cpu"></i> Device Management</div></a></li>
+      <li class="menu-item active"><a href="excel.html" class="menu-link active-tab"><div class="link-left"><i data-lucide="file-spreadsheet"></i> System Reports</div></a></li>
+    </ul>
+
+    <!-- AFTER (Dynamic) -->
+      <div class="sidebar-footer">
+       <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+       <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+        <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+        </a>
+        <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+      </div> 
+  </aside>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Excel Reports Portal</h1>
+       <!-- <p>Export filtered database records into clean Microsoft Excel reports.</p>-->
+      </div>
+      <div class="user-badge"><i data-lucide="file-spreadsheet"></i> System Reports</div>
+    </div>
+
+    <section class="reports-section">
+      <div class="reports-header">
+        <div>
+          <h2 class="reports-title">Custom Report Generator</h2>
+          <!--<p class="reports-sub">Select your report category, choose your date range, and download instantly.</p>-->
+        </div>
+      </div>
+
+      <div class="reports-page-grid">
+        
+        <!-- CROP & OPERATIONS REPORT CARD -->
+        <div class="report-box">
+          <div>
+            <h3 class="report-card-title"><i data-lucide="wheat" style="color:#059669;"></i> Crop & Operations Report</h3>
+            <p class="report-card-desc">Select a specific operational sheet and filter records by date range.</p>
+          </div>
+
+          <form action="export_excel.php" method="GET" target="_blank">
+            <div class="form-group">
+              <label for="report_type">Select Sheet / Report Category</label>
+              <select id="report_type" name="report_type" required>
+                <option value="" disabled selected>-- Choose Report Sheet --</option>
+                <option value="raw_material_intake">Raw Material Intake</option>
+                <option value="cleaning_sorting">Cleaning & Sorting</option>
+                <option value="production_milling">Production & Milling</option>
+                <option value="package_inventory">Package Inventory</option>
+                <option value="sales_distribution">Sales & Distribution</option>
+              </select>
+            </div>
+
+            <div class="date-row">
+              <div class="form-group">
+                <label for="from_date">From Date</label>
+                <input type="date" id="from_date" name="from_date" />
+              </div>
+              <div class="form-group">
+                <label for="to_date">To Date</label>
+                <input type="date" id="to_date" name="to_date" />
+              </div>
+            </div>
+
+            <button type="submit" class="download-btn btn-green report-btn" style="width:100%; margin-top:0.5rem;">
+              <i data-lucide="download"></i> Export Crop Excel
+            </button>
+          </form>
+        </div>
+
+        <!-- DEVICE & ASSET REPORT CARD (GAP FIXED) -->
+        <div class="report-box">
+          <div>
+            <h3 class="report-card-title"><i data-lucide="cpu" style="color:#b45309;"></i> Device & Asset Report</h3>
+            <p class="report-card-desc">Export assigned IT hardware and furniture assets filtered by date range.</p>
+          </div>
+
+          <form action="export_excel.php" method="GET" target="_blank">
+            <input type="hidden" name="report_type" value="device_assets">
+            
+            <div class="date-row">
+              <div class="form-group">
+                <label for="device_from">From Date</label>
+                <input type="date" id="device_from" name="from_date" />
+              </div>
+              <div class="form-group">
+                <label for="device_to">To Date</label>
+                <input type="date" id="device_to" name="to_date" />
+              </div>
+            </div>
+
+            <button type="submit" class="download-btn btn-gold report-btn" style="width:100%; margin-top:0.5rem;">
+              <i data-lucide="download"></i> Export Device Excel
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+    // Check session and update user name on load
+function checkUserSession() {
+  fetch('get_dashboard_stats.php')
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'unauthorized') {
+        window.location.href = 'login.html';
+        return;
+      }
+      if (data.status === 'success' && data.user) {
+        const sidebarUserEl = document.getElementById('sidebarUserName');
+        if (sidebarUserEl) {
+          sidebarUserEl.textContent = data.user.full_name;
+        }
+      }
+    })
+    .catch(err => console.error('Session check error:', err));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checkUserSession();
+});
+  </script>
+</body>
+</html>

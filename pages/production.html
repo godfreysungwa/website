@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Production & Milling</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/production.css" />
+  <style>
+    .full-width { grid-column: 1 / -1; }
+    .alert-success {
+      grid-column: 1 / -1;
+      background-color: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #34d399;
+    }
+    .alert-danger {
+      grid-column: 1 / -1;
+      background-color: #fee2e2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #f87171;
+    }
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #15803d;
+      background-color: #f0fdf4;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #bbf7d0;
+      margin-left: 0.5rem;
+    }
+    .deduction-details {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #047857;
+      margin-top: 4px;
+      padding-left: 1.5rem;
+    }
+    .deduction-details ul {
+      margin: 4px 0 0 0;
+      padding-left: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item active">
+        <details class="sidebar-accordion" open>
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html" class="sub-link-active"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item"><a href="device.html" class="menu-link"><div class="link-left"><i data-lucide="cpu"></i> Device Management</div></a></li>
+      <li class="menu-item"><a href="excel.html" class="menu-link"><div class="link-left"><i data-lucide="file-spreadsheet"></i> System Reports</div></a></li>
+    </ul>
+    <div class="sidebar-footer">
+       <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+        <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+        <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+         </a>
+         <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Production & Milling</h1>
+      </div>
+      <div class="user-badge"><i data-lucide="factory"></i> Milling Operations</div>
+    </div>
+
+    <section class="form-container-card">
+      <div class="card-header">
+        <h2><i data-lucide="cog"></i> Milling Shift Run</h2>
+      </div>
+
+      <form id="productionForm" class="portal-form">
+        <div class="form-grid">
+          
+          <!-- Alerts -->
+          <div id="successAlert" class="alert-success" style="display: none;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i data-lucide="check-circle"></i> <span id="successMessage">Production run recorded successfully!</span>
+            </div>
+            <div id="deductionDetails" class="deduction-details"></div>
+          </div>
+          <div id="errorAlert" class="alert-danger" style="display: none;">
+            <i data-lucide="alert-circle"></i> <span id="errorMessage"></span>
+          </div>
+          
+          <!-- Production Run ID -->
+          <div class="form-group">
+            <label for="productionRunId"><i data-lucide="qr-code" class="label-icon"></i> Production Run ID</label>
+            <input type="text" id="productionRunId" name="productionRunId" placeholder="e.g., PRD-2026-001" required />
+          </div>
+
+          <!-- Production Date Picker -->
+          <div class="form-group">
+            <label for="productionDate"><i data-lucide="calendar" class="label-icon"></i> Choose Production Date</label>
+            <input type="date" id="productionDate" name="productionDate" required />
+          </div>
+
+          <!-- Cleaned Crop Source Dropdown -->
+          <div class="form-group">
+            <label for="cleanedCropSource">
+              <i data-lucide="wheat" class="label-icon"></i> Cleaned Crop Source
+              <span id="stockBadge" class="stock-badge" style="display: none;">
+                Available: <span id="availableStockVal">0.00</span> <span class="unit-label">Kg</span>
+              </span>
+            </label>
+            <select id="cleanedCropSource" name="cleanedCropSource" required>
+              <option value="" disabled selected>Select crop source</option>
+              <option value="Ulezi">Ulezi (Finger Millet)</option>
+              <option value="Uwele">Uwele (Pearl Millet)</option>
+              <option value="Mtama">Mtama (Sorghum)</option>
+              <option value="Sooji">Sooji</option>
+              <option value="Sooji Chenga">Sooji Chenga</option>
+              <option value="Maize">Maize</option>
+              <option value="Yellow Corn">Yellow Corn</option>
+              <option value="Ngano">Ngano</option>
+              <option value="Ndizi">Ndizi (Banana)</option>
+            </select>
+          </div>
+
+          <!-- Measurement Unit -->
+          <div class="form-group">
+            <label for="measurementUnit"><i data-lucide="layers" class="label-icon"></i> Measurement Unit</label>
+            <select id="measurementUnit" name="measurementUnit" required>
+              <option value="Kg" selected>Kilograms (Kg)</option>
+              <option value="Bag">Bags</option>
+            </select>
+          </div>
+
+          <!-- Cleaned Stock Used -->
+          <div class="form-group">
+            <label for="cleanedStockUsed"><i data-lucide="arrow-down-left" class="label-icon"></i> Stock Used (<span class="unit-label">Kg</span>)</label>
+            <input type="number" step="0.01" id="cleanedStockUsed" name="cleanedStockUsed" placeholder="0.00" min="0.01" required />
+          </div>
+
+          <!-- Finished Product Name Dropdown -->
+          <div class="form-group">
+            <label for="finishedProductName"><i data-lucide="box" class="label-icon"></i> Finished Product Name</label>
+            <select id="finishedProductName" name="finishedProductName" required>
+              <option value="" disabled selected>Select crop source first</option>
+            </select>
+          </div>
+
+          <!-- Target Packaging Size Mode (Retail vs Bulk up to 50kg) -->
+          <div class="form-group">
+            <label for="productionBagSize"><i data-lucide="package-plus" class="label-icon"></i> Bulk / Wholesale Bag Size / Retail Size</label>
+            <select id="productionBagSize" name="productionBagSize" required>
+              <option value="" disabled selected>Select bag size</option>
+              <optgroup label="Retail Sizes (Packed in Cartons)">
+                <option value="1kg">1 kg Retail Bag</option>
+                <option value="2kg" selected>2 kg Retail Bag</option>
+              </optgroup>
+              <optgroup label="Bulk / Wholesale Sizes (Direct Bags)">
+                <option value="5kg">5 kg Bulk Bag</option>
+                <option value="10kg">10 kg Bulk Bag</option>
+                <option value="15kg">15 kg Bulk Bag</option>
+                <option value="20kg">20 kg Bulk Bag</option>
+                <option value="25kg">25 kg Bulk Bag</option>
+                <option value="30kg">30 kg Bulk Bag</option>
+                <option value="35kg">35 kg Bulk Bag</option>
+                <option value="40kg">40 kg Bulk Bag</option>
+                <option value="45kg">45 kg Bulk Bag</option>
+                <option value="50kg">50 kg Bulk Bag</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Yield Output Amount -->
+          <div class="form-group">
+            <label for="yieldOutput"><i data-lucide="check-circle-2" class="label-icon"></i> Yield Output Amount (<span class="unit-label">Kg</span>)</label>
+            <input type="number" step="0.01" id="yieldOutput" name="yieldOutput" placeholder="0.00" readonly style="background-color: #f3f4f6; cursor: not-allowed; font-weight: 700; color: #16a34a;" />
+          </div>
+
+          <!-- Dynamic Output Label -->
+          <div class="form-group">
+            <label id="outputLabel" for="cartonsProduced"><i data-lucide="package" class="label-icon"></i> Total Cartons Produced</label>
+            <input type="number" id="cartonsProduced" name="cartonsProduced" placeholder="0" readonly style="background-color: #f3f4f6; cursor: not-allowed; font-weight: 700; color: #2563eb;" />
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submitBtn" class="btn-primary-green"><i data-lucide="save"></i> Submit Milling Record</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const cleanedCropSource   = document.getElementById('cleanedCropSource');
+    const measurementUnit     = document.getElementById('measurementUnit');
+    const unitLabels          = document.querySelectorAll('.unit-label');
+    const cleanedStockUsed    = document.getElementById('cleanedStockUsed');
+    const finishedProductName = document.getElementById('finishedProductName');
+    const productionBagSize   = document.getElementById('productionBagSize');
+    const yieldOutput         = document.getElementById('yieldOutput');
+    const cartonsProduced     = document.getElementById('cartonsProduced');
+    const outputLabel         = document.getElementById('outputLabel');
+    const stockBadge          = document.getElementById('stockBadge');
+    const availableStockVal   = document.getElementById('availableStockVal');
+    const productionForm      = document.getElementById('productionForm');
+    const successAlert        = document.getElementById('successAlert');
+    const errorAlert          = document.getElementById('errorAlert');
+    const errorMessage        = document.getElementById('errorMessage');
+    const deductionDetails    = document.getElementById('deductionDetails');
+    const submitBtn           = document.getElementById('submitBtn');
+    const productionDate      = document.getElementById('productionDate');
+
+    let currentAvailableCleanedStock = 0;
+    let isDirectIntakeCrop = false;
+
+    productionDate.value = new Date().toISOString().split('T')[0];
+
+    const sizeOneKgGroup = ['Ulezi', 'Finger Millet', 'Uwele', 'Mtama', 'Pearl Millet', 'Sooji', 'Ndizi', 'Banana', 'Wheat Flour'];
+    const sizeTwoKgGroup = [
+      'Maize Sembe',
+      'Maize Dona',
+      'White Kashisha',
+      'Yellow Sembe',
+      'Yellow Dona',
+      'Yellow Kashisha',
+      'Ngano Flour'
+    ];
+
+    function updateOutputLabel(bagSize) {
+      const bagWeight = parseInt(bagSize, 10) || 2;
+      if (bagWeight >= 5) {
+        outputLabel.innerHTML = `<i data-lucide="package" class="label-icon"></i> Total Bulk Bags Produced (${bagSize})`;
+      } else {
+        outputLabel.innerHTML = `<i data-lucide="package" class="label-icon"></i> Total Cartons Produced`;
+      }
+      lucide.createIcons();
+    }
+
+    function calculateOutput(enteredVal, crop, unit, bagSizeStr) {
+      if (!enteredVal || enteredVal <= 0) return 0;
+
+      let bagWeight = 2;
+      if (bagSizeStr) {
+        const match = bagSizeStr.match(/(\d+)/);
+        if (match) {
+          bagWeight = parseFloat(match[1]);
+        }
+      }
+      if (bagWeight <= 0) bagWeight = 2;
+
+      const isBulkSize = bagWeight >= 5;
+      if (isBulkSize) {
+        return Math.floor(enteredVal / bagWeight);
+      }
+
+      const cropLower = crop.toLowerCase();
+      const finishedLower = (finishedProductName.value || '').toLowerCase();
+      const isUlezi = cropLower.includes('ulezi') || finishedLower.includes('ulezi');
+      const isBagMetric = unit === 'Bag' || unit === 'Bags';
+
+      if (isUlezi && isBagMetric && bagWeight === 1) {
+        return Math.round(enteredVal * 10);
+      }
+
+      const isSoojiChenga = cropLower.includes('sooji chenga') || finishedLower.includes('sooji chenga');
+      if (isSoojiChenga && bagWeight === 1) {
+        return Math.ceil(enteredVal / 12);
+      }
+
+      const isOneKg = sizeOneKgGroup.some(
+        key => cropLower.includes(key.toLowerCase()) || finishedLower.includes(key.toLowerCase())
+      );
+      if (isOneKg) {
+        return Math.ceil(enteredVal / 10);
+      }
+
+      const isTwoKg = bagWeight === 2 || sizeTwoKgGroup.some(
+        key => finishedLower === key.toLowerCase() || cropLower.includes(key.toLowerCase())
+      );
+      if (isTwoKg) {
+        return Math.ceil(enteredVal / 20);
+      }
+
+      return Math.ceil(enteredVal / 20);
+    }
+
+    productionBagSize.addEventListener('change', function() {
+      updateOutputLabel(this.value);
+      const enteredValue = parseFloat(cleanedStockUsed.value) || 0;
+      const crop = cleanedCropSource.value || '';
+      const unit = measurementUnit.value || 'Kg';
+      cartonsProduced.value = calculateOutput(enteredValue, crop, unit, this.value);
+    });
+
+    cleanedCropSource.addEventListener('change', function() {
+      const crop = this.value;
+      if (!crop) return;
+
+      const lowerCrop = crop.toLowerCase();
+      isDirectIntakeCrop = (lowerCrop === 'sooji' || lowerCrop === 'sooji chenga');
+
+      finishedProductName.innerHTML = '';
+      if (crop === 'Maize') {
+        finishedProductName.innerHTML = `
+          <option value="" disabled selected>Select finished product</option>
+          <option value="Maize Sembe">Maize Sembe</option>
+          <option value="Maize Dona">Maize Dona</option>
+          <option value="White Kashisha">White Kashisha</option>
+        `;
+      } else if (crop === 'Yellow Corn') {
+        finishedProductName.innerHTML = `
+          <option value="" disabled selected>Select finished product</option>
+          <option value="Yellow Sembe">Yellow Sembe</option>
+          <option value="Yellow Dona">Yellow Dona</option>
+          <option value="Yellow Kashisha">Yellow Kashisha</option>
+        `;
+      } else {
+        const defaultName = crop + " Flour";
+        finishedProductName.innerHTML = `<option value="${defaultName}" selected>${defaultName}</option>`;
+      }
+
+      const enteredValue = parseFloat(cleanedStockUsed.value) || 0;
+      cartonsProduced.value = calculateOutput(enteredValue, crop, measurementUnit.value, productionBagSize.value);
+
+      fetch(`get_cleaned_crop_info.php?crop=${encodeURIComponent(crop)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            currentAvailableCleanedStock = parseFloat(data.available_stock || data.available_cleaned_stock) || 0;
+            availableStockVal.textContent = currentAvailableCleanedStock.toFixed(2);
+            stockBadge.style.display = 'inline-flex';
+            if (data.unit) {
+              measurementUnit.value = data.unit;
+              unitLabels.forEach(l => l.textContent = data.unit);
+            }
+          } else {
+            currentAvailableCleanedStock = 0;
+            availableStockVal.textContent = '0.00';
+            stockBadge.style.display = 'inline-flex';
+          }
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+          currentAvailableCleanedStock = 0;
+          availableStockVal.textContent = '0.00';
+          stockBadge.style.display = 'inline-flex';
+        });
+    });
+
+    finishedProductName.addEventListener('change', function() {
+      const enteredValue = parseFloat(cleanedStockUsed.value) || 0;
+      const crop = cleanedCropSource.value || '';
+      const unit = measurementUnit.value || 'Kg';
+      cartonsProduced.value = calculateOutput(enteredValue, crop, unit, productionBagSize.value);
+    });
+
+    measurementUnit.addEventListener('change', function() {
+      const unit = this.value;
+      unitLabels.forEach(l => l.textContent = unit);
+      const enteredValue = parseFloat(cleanedStockUsed.value) || 0;
+      const crop = cleanedCropSource.value || '';
+      cartonsProduced.value = calculateOutput(enteredValue, crop, unit, productionBagSize.value);
+    });
+
+    cleanedStockUsed.addEventListener('input', function() {
+      const enteredValue = parseFloat(this.value) || 0;
+      const crop = cleanedCropSource.value || '';
+      const unit = measurementUnit.value || 'Kg';
+      
+      yieldOutput.value = this.value;
+      cartonsProduced.value = calculateOutput(enteredValue, crop, unit, productionBagSize.value);
+
+      const remainingAfterUse = Math.max(0, currentAvailableCleanedStock - enteredValue);
+      availableStockVal.textContent = remainingAfterUse.toFixed(2);
+
+      if (enteredValue > currentAvailableCleanedStock) {
+        this.style.borderColor = '#dc2626';
+        this.style.backgroundColor = '#fef2f2';
+      } else {
+        this.style.borderColor = '';
+        this.style.backgroundColor = '';
+      }
+    });
+
+    productionForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const enteredValue = parseFloat(cleanedStockUsed.value) || 0;
+
+      if (enteredValue > currentAvailableCleanedStock) {
+        alert(`Cannot proceed! Selected input (${enteredValue.toFixed(2)}) exceeds available stock (${currentAvailableCleanedStock.toFixed(2)}).`);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Processing & Deducting Stock...';
+
+      const formData = new FormData(productionForm);
+
+      fetch('save_calculations.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(async (response) => {
+        const text = await response.text();
+        try {
+          return JSON.parse(text);
+        } catch (err) {
+          throw new Error(`Server Response Error (${response.status}): ${text.substring(0, 200)}`);
+        }
+      })
+      .then(data => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="save"></i> Submit Milling Record';
+        lucide.createIcons();
+
+        if (data.status === 'success') {
+          errorAlert.style.display = 'none';
+          
+          let breakdown = '<strong>Production Run Logged Successfully:</strong><ul>';
+          if (data.deducted_details && data.deducted_details.length > 0) {
+            data.deducted_details.forEach(item => {
+              breakdown += `<li><strong>Deducted:</strong> ${item}</li>`;
+            });
+          }
+          breakdown += '</ul>';
+
+          deductionDetails.innerHTML = breakdown;
+          successAlert.style.display = 'flex';
+
+          productionForm.reset();
+          productionDate.value = new Date().toISOString().split('T')[0];
+          currentAvailableCleanedStock = 0;
+          stockBadge.style.display = 'none';
+          finishedProductName.innerHTML = '<option value="" disabled selected>Select crop source first</option>';
+          cartonsProduced.value = '';
+          yieldOutput.value = '';
+          updateOutputLabel(productionBagSize.value);
+
+          setTimeout(() => {
+            successAlert.style.display = 'none';
+          }, 12000);
+        } else {
+          successAlert.style.display = 'none';
+          errorMessage.textContent = data.message;
+          errorAlert.style.display = 'flex';
+        }
+      })
+      .catch(err => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="save"></i> Submit Milling Record';
+        lucide.createIcons();
+        
+        errorMessage.textContent = err.message;
+        errorAlert.style.display = 'flex';
+        console.error('Detailed Error:', err);
+      });
+    });
+
+    function checkUserSession() {
+      fetch('get_dashboard_stats.php')
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'unauthorized') {
+            window.location.href = 'login.html';
+            return;
+          }
+          if (data.status === 'success' && data.user) {
+            const sidebarUserEl = document.getElementById('sidebarUserName');
+            if (sidebarUserEl) {
+              sidebarUserEl.textContent = data.user.full_name;
+            }
+          }
+        })
+        .catch(err => console.error('Session check error:', err));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkUserSession();
+    });
+  </script>
+</body>
+</html>

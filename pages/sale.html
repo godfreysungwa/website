@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Store Dispatch</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/sale.css" />
+  <style>
+    .full-width { grid-column: 1 / -1; }
+    .alert-success {
+      grid-column: 1 / -1;
+      background-color: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #34d399;
+    }
+    .alert-danger {
+      grid-column: 1 / -1;
+      background-color: #fee2e2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #f87171;
+    }
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #15803d;
+      background-color: #f0fdf4;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #bbf7d0;
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item active">
+        <details class="sidebar-accordion" open>
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html" class="sub-link-active"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item"><a href="device.html" class="menu-link"><div class="link-left"><i data-lucide="cpu"></i> Device Management</div></a></li>
+      <li class="menu-item"><a href="excel.html" class="menu-link"><div class="link-left"><i data-lucide="file-spreadsheet"></i> System Reports</div></a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+       <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+        <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+        <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+         </a>
+         <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Finished Product Dispatch</h1>
+      </div>
+      <div class="user-badge"><i data-lucide="shopping-cart"></i> Store Dispatch Desk</div>
+    </div>
+
+    <section class="form-container-card">
+      <div class="card-header">
+        <h2><i data-lucide="receipt"></i> Product Stock Out / Dispatch Log</h2>
+      </div>
+
+      <form id="salesForm" class="portal-form">
+        <div class="form-grid">
+          
+          <!-- Notifications -->
+          <div id="successAlert" class="alert-success" style="display: none;">
+            <i data-lucide="check-circle"></i> <span id="successMessage">Stock dispatch recorded and inventory balance deducted successfully!</span>
+          </div>
+
+          <div id="errorAlert" class="alert-danger" style="display: none;">
+            <i data-lucide="alert-circle"></i> <span id="errorMessage"></span>
+          </div>
+
+          <!-- Dispatch Date -->
+          <div class="form-group">
+            <label for="saleDate"><i data-lucide="calendar"></i> Dispatch Date</label>
+            <input type="date" id="saleDate" name="saleDate" required />
+          </div>
+
+          <!-- Customer / Buyer / Recipient Name -->
+          <div class="form-group">
+            <label for="customerName"><i data-lucide="user"></i> Customer / Buyer Name</label>
+            <input type="text" id="customerName" name="customerName" placeholder="e.g., Arusha Wholesalers Ltd" required />
+          </div>
+
+          <!-- Finished Product Name Selection -->
+          <div class="form-group">
+            <label for="productSold">
+              <i data-lucide="box"></i> Finished Product Name
+            </label>
+            <select id="productSold" name="productSold" required>
+              <option value="" disabled selected>Select finished product</option>
+              <option value="Maize Sembe">Maize Sembe</option>
+              <option value="Maize Dona">Maize Dona</option>
+              <option value="Yellow Sembe">Yellow Sembe</option>
+              <option value="Yellow Dona">Yellow Dona</option>
+              <option value="Ngano Flour">Baking Flour / ATTA</option>
+              <option value="Sooji Flour">Sooji Flour</option>
+              <option value="Mtama Flour">Sorghum (Mtama) Flour</option>
+              <option value="Sooji Chenga Flour">Sooji Chenga Flour</option>
+              <option value="Ulezi Flour">Finger Millet (Ulezi) Flour</option>
+              <option value="Uwele Flour">Pearl Millet (Uwele) Flour</option>
+              <option value="White Kashisha">White Kashisha</option>
+              <option value="Yellow Kashisha">Yellow Kashisha</option>
+              <option value="Ndizi Flour">Dried Banana (Ndizi) Flour</option>
+            </select>
+          </div>
+
+          <!-- Dispatch Size Tier (Retail vs Bulk up to 50kg) -->
+          <div class="form-group">
+            <label for="dispatchBagSize">
+              <i data-lucide="package-plus"></i> Dispatch Packaging Size
+              <span id="stockBadge" class="stock-badge" style="display: none;">
+                Available: <span id="availableStockVal">0</span> <span id="stockUnitLabel">Cartons</span>
+              </span>
+            </label>
+            <select id="dispatchBagSize" name="dispatchBagSize" required>
+              <option value="" disabled selected>Select packaging size</option>
+              <optgroup label="Retail Sizes (Cartons)">
+                <option value="1kg">1 kg Retail Pack</option>
+                <option value="2kg" selected>2 kg Retail Pack</option>
+              </optgroup>
+              <optgroup label="Bulk / Wholesale Sizes (Direct Bags)">
+                <option value="5kg">5 kg Bulk Bag</option>
+                <option value="10kg">10 kg Bulk Bag</option>
+                <option value="15kg">15 kg Bulk Bag</option>
+                <option value="20kg">20 kg Bulk Bag</option>
+                <option value="25kg">25 kg Bulk Bag</option>
+                <option value="30kg">30 kg Bulk Bag</option>
+                <option value="35kg">35 kg Bulk Bag</option>
+                <option value="40kg">40 kg Bulk Bag</option>
+                <option value="45kg">45 kg Bulk Bag</option>
+                <option value="50kg">50 kg Bulk Bag</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Movement Type Dropdown -->
+          <div class="form-group">
+            <label for="movementType"><i data-lucide="arrow-left-right"></i> Movement Type</label>
+            <select id="movementType" name="movementType" required>
+              <option value="" disabled selected>Select movement type</option>
+              <option value="Sale">Sale</option>
+              <option value="Replaced">Replaced</option>
+              <option value="Open Box">Open Box</option>
+              <option value="Complimentary">Complimentary</option>
+            </select>
+          </div>
+
+          <!-- Quantity Dispatched -->
+          <div class="form-group">
+            <label id="quantityLabel" for="quantitySold"><i data-lucide="package-minus"></i> Quantity Dispatched (Cartons)</label>
+            <input type="number" id="quantitySold" name="quantitySold" placeholder="0" min="1" required />
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" id="resetBtn" class="btn-secondary">Reset</button>
+          <button type="submit" id="submitBtn" class="btn-primary-green"><i data-lucide="save"></i> Save Dispatch Record</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const saleDate         = document.getElementById('saleDate');
+    const productSold      = document.getElementById('productSold');
+    const dispatchBagSize  = document.getElementById('dispatchBagSize');
+    const quantitySold     = document.getElementById('quantitySold');
+    const quantityLabel    = document.getElementById('quantityLabel');
+    const stockBadge       = document.getElementById('stockBadge');
+    const availableStockVal= document.getElementById('availableStockVal');
+    const stockUnitLabel   = document.getElementById('stockUnitLabel');
+    const salesForm        = document.getElementById('salesForm');
+    const successAlert     = document.getElementById('successAlert');
+    const errorAlert       = document.getElementById('errorAlert');
+    const errorMessage     = document.getElementById('errorMessage');
+    const submitBtn        = document.getElementById('submitBtn');
+
+    let currentAvailableStock = 0;
+
+    saleDate.value = new Date().toISOString().split('T')[0];
+
+    function fetchAvailableStock() {
+      const product = productSold.value;
+      const bagSize = dispatchBagSize.value;
+      if (!product || !bagSize) return;
+
+      fetch(`get_available_product_stock.php?product=${encodeURIComponent(product)}&size=${encodeURIComponent(bagSize)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            currentAvailableStock = parseFloat(data.available_stock) || 0;
+            availableStockVal.textContent = currentAvailableStock;
+            stockBadge.style.display = 'inline-flex';
+          } else {
+            currentAvailableStock = 0;
+            availableStockVal.textContent = '0';
+            stockBadge.style.display = 'inline-flex';
+          }
+        })
+        .catch(err => console.error('Fetch error:', err));
+    }
+
+    productSold.addEventListener('change', fetchAvailableStock);
+
+    dispatchBagSize.addEventListener('change', function() {
+      const size = this.value;
+      const bagWeight = parseInt(size) || 2;
+      const isBulk = bagWeight >= 5;
+
+      if (isBulk) {
+        quantityLabel.innerHTML = `<i data-lucide="package-minus"></i> Quantity Dispatched (Bulk Bags - ${size})`;
+        stockUnitLabel.textContent = `Bags (${size})`;
+      } else {
+        quantityLabel.innerHTML = `<i data-lucide="package-minus"></i> Quantity Dispatched (Cartons)`;
+        stockUnitLabel.textContent = `Cartons`;
+      }
+      lucide.createIcons();
+      fetchAvailableStock();
+    });
+
+    quantitySold.addEventListener('input', function() {
+      const qty = parseFloat(this.value) || 0;
+      if (qty > currentAvailableStock) {
+        this.style.borderColor = '#dc2626';
+        this.style.backgroundColor = '#fef2f2';
+      } else {
+        this.style.borderColor = '';
+        this.style.backgroundColor = '';
+      }
+    });
+
+    salesForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const qty = parseFloat(quantitySold.value) || 0;
+      if (qty > currentAvailableStock) {
+        alert(`Stock limit exceeded! You only have ${currentAvailableStock} available for this product and size.`);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Saving Dispatch...';
+
+      const formData = new FormData(salesForm);
+
+      fetch('save_sale.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="save"></i> Save Dispatch Record';
+        lucide.createIcons();
+
+        if (data.status === 'success') {
+          errorAlert.style.display = 'none';
+          successAlert.style.display = 'flex';
+
+          salesForm.reset();
+          saleDate.value = new Date().toISOString().split('T')[0];
+          stockBadge.style.display = 'none';
+
+          setTimeout(() => {
+            successAlert.style.display = 'none';
+          }, 5000);
+        } else {
+          successAlert.style.display = 'none';
+          errorMessage.textContent = data.message;
+          errorAlert.style.display = 'flex';
+        }
+      })
+      .catch(err => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="save"></i> Save Dispatch Record';
+        lucide.createIcons();
+
+        errorMessage.textContent = 'System connection error. Please try again.';
+        errorAlert.style.display = 'flex';
+      });
+    });
+
+    function checkUserSession() {
+      fetch('get_dashboard_stats.php')
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'unauthorized') {
+            window.location.href = 'login.html';
+            return;
+          }
+          if (data.status === 'success' && data.user) {
+            const sidebarUserEl = document.getElementById('sidebarUserName');
+            if (sidebarUserEl) {
+              sidebarUserEl.textContent = data.user.full_name;
+            }
+          }
+        })
+        .catch(err => console.error('Session check error:', err));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkUserSession();
+    });
+  </script>
+</body>
+</html>

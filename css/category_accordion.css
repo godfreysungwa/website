@@ -1,0 +1,163 @@
+/* Accordion & Simplified Category Cards */
+
+.category-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.category-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.category-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+/* Accordion Specifics */
+details.accordion-card summary.category-header {
+  padding: 24px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+details.accordion-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.category-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.category-icon-wrapper.green {
+  background-color: #f0fdf4;
+  color: #16a34a;
+}
+
+.category-icon-wrapper.gold {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.category-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.category-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.category-desc {
+  margin: 4px 0 0 0;
+  font-size: 0.86rem;
+  color: #64748b;
+}
+
+.chevron-icon {
+  width: 22px;
+  height: 22px;
+  color: #64748b;
+  transition: transform 0.25s ease;
+}
+
+details[open] .chevron-icon {
+  transform: rotate(180deg);
+  color: #16a34a;
+}
+
+/* Expanded Sub-Links */
+.category-links {
+  padding: 0 24px 24px 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 20px;
+}
+
+.sub-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  color: #1e293b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+}
+
+.sub-link:hover {
+  background-color: #f0fdf4;
+  border-color: #16a34a;
+  color: #16a34a;
+  transform: translateY(-2px);
+}
+
+.sub-link .arrow-icon {
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.sub-link:hover .arrow-icon {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* Direct Navigation Cards */
+.card-link-wrapper {
+  text-decoration: none;
+  display: block;
+}
+
+.direct-card .category-header {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.direct-arrow {
+  width: 22px;
+  height: 22px;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.direct-card:hover .direct-arrow {
+  color: #16a34a;
+  transform: translateX(4px);
+}

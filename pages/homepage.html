@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Store Operations & System Dashboard</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- External Stylesheets -->
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <style>
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .decision-card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .decision-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+      padding-bottom: 0.75rem;
+    }
+    .decision-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: #4b5563;
+      background: #f9fafb;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #f3f4f6;
+      gap: 0.5rem;
+    }
+    .item-row strong {
+      color: #111827;
+      font-weight: 700;
+      text-align: right;
+    }
+    .badge-sub {
+      font-size: 0.75rem;
+      background: #e5e7eb;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: #374151;
+      font-weight: 600;
+    }
+    .dashboard-sections {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 992px) {
+      .dashboard-sections { grid-template-columns: 1fr; }
+    }
+    .widget-card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .widget-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .activity-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .activity-table th {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      background: #f9fafb;
+      color: #6b7280;
+      font-weight: 600;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .activity-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #f3f4f6;
+      color: #374151;
+    }
+    .badge-tag {
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+    .tag-intake { background: #dbeafe; color: #1e40af; }
+    .tag-production { background: #d1fae5; color: #065f46; }
+    .tag-sales { background: #fef3c7; color: #92400e; }
+    
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #ef4444;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      transition: color 0.2s ease;
+    }
+    .btn-logout:hover {
+      color: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT VERTICAL NAVIGATION SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item active">
+        <a href="homepage.html" class="menu-link active-tab">
+          <div class="link-left"><i data-lucide="home"></i> Operational Hub</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <details class="sidebar-accordion" open>
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+
+      <li class="menu-item">
+        <a href="device.html" class="menu-link">
+          <div class="link-left"><i data-lucide="cpu"></i> Device Management</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="excel.html" class="menu-link">
+          <div class="link-left"><i data-lucide="file-spreadsheet"></i> System Reports</div>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <p>Logged in: <strong id="sidebarUserName">System User</strong></p>
+      <a href="logout.php" class="btn-logout"><i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out</a>
+      <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN WORKSPACE CONTENT AREA -->
+  <main class="main-wrapper">
+    
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Operational Decision Hub</h1>
+      </div>
+      <div class="user-badge" id="topUserBadge" style="display:flex; align-items:center; gap:0.5rem; padding:0.4rem 0.8rem; border-radius:6px; background:#ecfdf5; color:#047857; font-weight:700; font-size:0.85rem;">
+        <i data-lucide="user-check"></i> <span id="topUserText">Active Shift: System User</span>
+      </div>
+    </div>
+
+    <!-- ITEMIZED DECISION CARDS GRID -->
+    <div class="decision-grid">
+      
+      <!-- 1. Raw Material Remained in Stock (Untouched Intake) -->
+      <div class="decision-card">
+        <div>
+          <div class="decision-header">
+            <h3 class="decision-title"><i data-lucide="warehouse" style="color:#d97706;"></i> Raw Material Stock</h3>
+            <span style="font-size:0.75rem; font-weight:700; color:#d97706; background:#fffbeb; padding:0.2rem 0.5rem; border-radius:4px;">Untouched</span>
+          </div>
+          <ul id="rawStockList" class="item-list">
+            <li class="item-row" style="justify-content:center; color:#6b7280;">Loading raw stocks...</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2. Cleaned Stock Ready (By Crop Variety) -->
+      <div class="decision-card">
+        <div>
+          <div class="decision-header">
+            <h3 class="decision-title"><i data-lucide="sparkles" style="color:#059669;"></i> Cleaned Stock Ready</h3>
+            <span style="font-size:0.75rem; font-weight:700; color:#059669; background:#ecfdf5; padding:0.2rem 0.5rem; border-radius:4px;">Available</span>
+          </div>
+          <ul id="cleanedStockList" class="item-list">
+            <li class="item-row" style="justify-content:center; color:#6b7280;">Loading cleaned stocks...</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. Finished Product Stock (Cartons & Bulk Bags by Size) -->
+      <div class="decision-card">
+        <div>
+          <div class="decision-header">
+            <h3 class="decision-title"><i data-lucide="package" style="color:#2563eb;"></i> Finished Product Stock</h3>
+            <span style="font-size:0.75rem; font-weight:700; color:#2563eb; background:#eff6ff; padding:0.2rem 0.5rem; border-radius:4px;">In Stock</span>
+          </div>
+          <ul id="cartonStockList" class="item-list">
+            <li class="item-row" style="justify-content:center; color:#6b7280;">Loading product inventory...</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4. Packaging Inventory (Per Product: Retail vs Bulk) -->
+      <div class="decision-card">
+        <div>
+          <div class="decision-header">
+            <h3 class="decision-title"><i data-lucide="box" style="color:#9333ea;"></i> Packaging & Consumables</h3>
+            <span style="font-size:0.75rem; font-weight:700; color:#9333ea; background:#faf5ff; padding:0.2rem 0.5rem; border-radius:4px;">Per-Product</span>
+          </div>
+          <ul id="packageStockList" class="item-list">
+            <li class="item-row" style="justify-content:center; color:#6b7280;">Loading packaging stocks...</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DASHBOARD SECTIONS -->
+    <div class="dashboard-sections">
+      
+      <!-- RECENT OPERATIONAL ACTIVITY TABLE -->
+      <div class="widget-card">
+        <div class="widget-header">
+          <h2 class="widget-title"><i data-lucide="history" style="color:#047857;"></i> Recent Operational Activity</h2>
+          <a href="excel.html" style="font-size:0.85rem; color:#047857; text-decoration:none; font-weight:600;">View Reports &rarr;</a>
+        </div>
+
+        <table class="activity-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Ref / Batch ID</th>
+              <th>Operational Details</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="activityLogBody">
+            <tr>
+              <td colspan="4" style="text-align:center; color:#6b7280; padding:1.5rem;">Loading live operational data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- QUICK STOREKEEPER ACTIONS & BACKUP -->
+      <div class="widget-card">
+        <div class="widget-header">
+          <h2 class="widget-title"><i data-lucide="zap" style="color:#d97706;"></i> Quick Actions</h2>
+        </div>
+
+        <div class="quick-actions-grid" style="display:flex; flex-direction:column; gap:0.75rem;">
+          <a href="raw_intake.html" class="action-btn" style="display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; text-decoration:none; color:#374151; font-weight:600; font-size:0.88rem;">
+            <span><i data-lucide="truck" style="width:16px; margin-right:6px; color:#059669;"></i> Record Raw Intake</span>
+            <i data-lucide="arrow-right" style="width:16px;"></i>
+          </a>
+          <a href="cleaning.html" class="action-btn" style="display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; text-decoration:none; color:#374151; font-weight:600; font-size:0.88rem;">
+            <span><i data-lucide="sparkles" style="width:16px; margin-right:6px; color:#059669;"></i> Log Cleaning & Sorting</span>
+            <i data-lucide="arrow-right" style="width:16px;"></i>
+          </a>
+          <a href="production.html" class="action-btn" style="display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; text-decoration:none; color:#374151; font-weight:600; font-size:0.88rem;">
+            <span><i data-lucide="factory" style="width:16px; margin-right:6px; color:#059669;"></i> Start Milling Shift Run</span>
+            <i data-lucide="arrow-right" style="width:16px;"></i>
+          </a>
+          <a href="package_inventory.html" class="action-btn" style="display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; text-decoration:none; color:#374151; font-weight:600; font-size:0.88rem;">
+            <span><i data-lucide="box" style="width:16px; margin-right:6px; color:#059669;"></i> Check Package Stock</span>
+            <i data-lucide="arrow-right" style="width:16px;"></i>
+          </a>
+          <a href="sale.html" class="action-btn" style="display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; text-decoration:none; color:#374151; font-weight:600; font-size:0.88rem;">
+            <span><i data-lucide="shopping-cart" style="width:16px; margin-right:6px; color:#059669;"></i> Dispatch Sales Order</span>
+            <i data-lucide="arrow-right" style="width:16px;"></i>
+          </a>
+          
+          <!-- DATABASE BACKUP -->
+          <a href="backup_db.php" class="action-btn" style="display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; text-decoration:none; color:#1e40af; font-weight:700; font-size:0.88rem;">
+            <span><i data-lucide="database" style="width:16px; margin-right:6px; color:#2563eb;"></i> Backup Database (.SQL)</span>
+            <i data-lucide="download" style="width:16px;"></i>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty Database State Placeholder -->
+    <div id="emptyStateContainer" class="dashboard-section empty-state-container" style="display: none;">
+      <div class="empty-state" style="background:#ffffff; padding:2rem; border-radius:12px; text-align:center; border:1px solid #e5e7eb;">
+        <i data-lucide="folder-open" class="empty-icon" style="width:48px; height:48px; color:#9ca3af; margin-bottom:1rem;"></i>
+        <h3 style="font-size:1.1rem; color:#1f2937; margin-bottom:0.5rem;">No Stock Records Found</h3>
+        <p style="color:#6b7280; font-size:0.9rem;">Database tables are currently empty. Inventory balances will automatically populate here once you submit your first forms.</p>
+      </div>
+    </div>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    function loadDashboardData() {
+      fetch('get_dashboard_stats.php')
+        .then(res => res.json())
+        .then(data => {
+          
+          if (data.status === 'unauthorized') {
+            window.location.href = 'login.html';
+            return;
+          }
+
+          if (data.status === 'success') {
+            
+            // --- UPDATE SESSION USER DISPLAY ---
+            if (data.user) {
+              const sidebarUserEl = document.getElementById('sidebarUserName');
+              const topUserTextEl = document.getElementById('topUserText');
+              const topUserBadgeEl = document.getElementById('topUserBadge');
+
+              if (sidebarUserEl) sidebarUserEl.textContent = data.user.full_name;
+              if (topUserTextEl) topUserTextEl.textContent = `Active Shift: ${data.user.full_name} (${data.user.role})`;
+
+              if (topUserBadgeEl && data.user.role === 'Admin') {
+                topUserBadgeEl.style.background = '#fee2e2';
+                topUserBadgeEl.style.color = '#991b1b';
+              }
+            }
+
+            // 0. Populate Raw Material Stock Remained
+            const rawList = document.getElementById('rawStockList');
+            rawList.innerHTML = '';
+            if (data.raw_stock_breakdown && data.raw_stock_breakdown.length > 0) {
+              data.raw_stock_breakdown.forEach(item => {
+                let unitLabel = item.unit ? item.unit : 'Kg';
+                rawList.innerHTML += `
+                  <li class="item-row">
+                    <span>${item.crop_name}</span>
+                    <strong>${parseFloat(item.net_raw_stock).toLocaleString()} ${unitLabel}</strong>
+                  </li>
+                `;
+              });
+            } else {
+              rawList.innerHTML = '<li class="item-row" style="justify-content:center; color:#6b7280;">No untouched raw stock.</li>';
+            }
+
+            // 1. Populate Cleaned Stock Ready
+            const cleanedList = document.getElementById('cleanedStockList');
+            cleanedList.innerHTML = '';
+            if (data.cleaned_stocks && data.cleaned_stocks.length > 0) {
+              data.cleaned_stocks.forEach(item => {
+                let unitLabel = item.unit ? item.unit : 'Kg';
+                cleanedList.innerHTML += `
+                  <li class="item-row">
+                    <span>${item.crop_name}</span>
+                    <strong>${parseFloat(item.net_cleaned_stock).toLocaleString()} ${unitLabel}</strong>
+                  </li>
+                `;
+              });
+            } else {
+              cleanedList.innerHTML = '<li class="item-row" style="justify-content:center; color:#6b7280;">No cleaned stock available.</li>';
+            }
+
+            // 2. Populate Net Finished Product Stock (Size-Aware: Cartons vs Bulk Bags)
+            const cartonList = document.getElementById('cartonStockList');
+            cartonList.innerHTML = '';
+            if (data.carton_breakdown && data.carton_breakdown.length > 0) {
+              data.carton_breakdown.forEach(item => {
+                let bagWeight = parseInt(item.bag_size) || 2;
+                let unitLabel = bagWeight >= 5 ? `Bulk Bags (${item.bag_size})` : `Cartons (${item.bag_size})`;
+
+                cartonList.innerHTML += `
+                  <li class="item-row">
+                    <span>${item.product_name}</span>
+                    <strong>${parseInt(item.net_stock).toLocaleString()} ${unitLabel}</strong>
+                  </li>
+                `;
+              });
+            } else {
+              cartonList.innerHTML = '<li class="item-row" style="justify-content:center; color:#6b7280;">No finished stock available.</li>';
+            }
+
+            // 3. Populate Packaging Inventory (Per Product: Retail vs Bulk)
+            const packageList = document.getElementById('packageStockList');
+            packageList.innerHTML = '';
+            
+            if (data.package_breakdown && data.package_breakdown.length > 0) {
+              packageList.innerHTML += `<li class="item-row" style="background:#f3f4f6; font-weight:700; font-size:0.8rem; color:#374151;"><span>Product Packaging Breakdown</span></li>`;
+              
+              data.package_breakdown.forEach(item => {
+                const productLabel = item.target_product || 'Unspecified Product';
+                const bagQty = parseFloat(item.paper_bag_qty) || 0;
+                const boxQty = parseFloat(item.box_qty) || 0;
+                const plainBoxQty = parseFloat(item.plain_box) || 0;
+                const plasticContainerQty = parseFloat(item.plastic_containers) || 0;
+                const bulkQty = parseFloat(item.bulk_bag_qty) || 0;
+
+                const isSoojiChenga = productLabel.toLowerCase().includes('sooji chenga');
+
+                if (isSoojiChenga) {
+                  packageList.innerHTML += `
+                    <li class="item-row">
+                      <span>${productLabel} <span class="badge-sub">Containers</span></span>
+                      <strong>${plasticContainerQty.toLocaleString()} pcs | ${plainBoxQty.toLocaleString()} Plain Boxes</strong>
+                    </li>
+                  `;
+                } else if (bagQty > 0 || boxQty > 0) {
+                  packageList.innerHTML += `
+                    <li class="item-row">
+                      <span>${productLabel} <span class="badge-sub">${item.paper_bag_size || 'Standard'}</span></span>
+                      <strong>${bagQty.toLocaleString()} Bags | ${boxQty.toLocaleString()} Boxes</strong>
+                    </li>
+                  `;
+                }
+
+                if (bulkQty > 0) {
+                  packageList.innerHTML += `
+                    <li class="item-row" style="background:#fffbeb; border-color:#fde68a;">
+                      <span>${productLabel} <span class="badge-sub">Bulk ${item.bulk_bag_size || ''}</span></span>
+                      <strong style="color:#b45309;">${bulkQty.toLocaleString()} Bulk Bags</strong>
+                    </li>
+                  `;
+                }
+              });
+            } else {
+              packageList.innerHTML = '<li class="item-row" style="justify-content:center; color:#6b7280;">No package inventory logged.</li>';
+            }
+
+            const totalGlue = parseFloat(data.universal_remaining_glue) || 0;
+            packageList.innerHTML += `
+              <li class="item-row" style="background:#f0fdf4; border-color:#bbf7d0; margin-top:0.4rem;">
+                <span>Wood Glue (Universal Pool)</span>
+                <strong style="color:#047857;">${totalGlue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} Liters</strong>
+              </li>
+            `;
+
+            // 4. Populate Recent Operational Activity Table
+            const tbody = document.getElementById('activityLogBody');
+            tbody.innerHTML = '';
+            if (data.recent_activities && data.recent_activities.length > 0) {
+              data.recent_activities.forEach(act => {
+                let tagClass = 'tag-intake';
+                if (act.activity_type === 'Production') tagClass = 'tag-production';
+                if (act.activity_type === 'Sales') tagClass = 'tag-sales';
+
+                tbody.innerHTML += `
+                  <tr>
+                    <td><span class="badge-tag ${tagClass}">${act.activity_type}</span></td>
+                    <td><code>${act.ref_id || 'N/A'}</code></td>
+                    <td>${act.details || '-'}</td>
+                    <td style="color:#6b7280;">${act.created_at || '-'}</td>
+                  </tr>
+                `;
+              });
+            } else {
+              tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#6b7280; padding:1.5rem;">No recent activities logged yet.</td></tr>';
+            }
+
+            if (!data.has_data) {
+              document.getElementById('emptyStateContainer').style.display = 'block';
+            }
+          }
+        })
+        .catch(err => console.error('Error fetching dashboard stats:', err));
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDashboardData);
+  </script>
+</body>
+</html>

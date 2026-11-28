@@ -1,0 +1,224 @@
+/* ==========================================
+   GLOBAL & LAYOUT BASE
+   ========================================== */
+body {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  margin: 0;
+}
+
+/* Blur effect applied to background container when modal is active */
+body.modal-open .main-content-blur {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ==========================================
+   MODAL / POPUP OVERLAY
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.65); /* Dark slate overlay */
+  backdrop-filter: blur(4px); /* Smooth background blur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+/* Active class to toggle modal visibility via JavaScript */
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================
+   FORM CONTAINER / MODAL CARD
+   ========================================== */
+.form-container-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  max-width: 640px; /* Constrains card size in modal state */
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.25s ease;
+  box-sizing: border-box;
+}
+
+.modal-overlay.active .form-container-card {
+  transform: translateY(0) scale(1);
+}
+
+/* ==========================================
+   CARD HEADER & CLOSE BUTTON
+   ========================================== */
+.card-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+/* Close Modal Button (X) */
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-close-modal:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+/* ==========================================
+   FORM ELEMENTS
+   ========================================== */
+.portal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: #0f172a;
+  outline: none;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #d97706;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+}
+
+/* ==========================================
+   FORM ACTIONS & BUTTONS
+   ========================================== */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn-secondary {
+  padding: 11px 20px;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.btn-primary-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background-color: #d97706;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.25);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary-gold:hover {
+  background-color: #b45309;
+  box-shadow: 0 6px 8px -1px rgba(180, 83, 9, 0.35);
+}
+
+/* Responsive adjustments for mobile viewports */
+@media (max-width: 480px) {
+  .form-container-card {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-secondary,
+  .btn-primary-gold {
+    width: 100%;
+  }
+}

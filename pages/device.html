@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - Device & Asset Management</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="stylesheet" href="../css/device.css" />
+  <style>
+    .device-main-card {
+      background: #ffffff !important;
+      border-radius: 12px !important;
+      border: 1px solid #e5e7eb !important;
+      padding: 1.75rem 2.25rem !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03) !important;
+      margin-bottom: 2rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-x: hidden !important;
+    }
+
+    .device-row-top {
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 1.25rem !important;
+      margin-bottom: 1.25rem !important;
+      width: 100% !important;
+    }
+
+    .device-row-bottom {
+      display: flex !important;
+      justify-content: flex-end !important;
+      width: 100% !important;
+    }
+
+    .device-field {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      margin-bottom: 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+
+    .device-field input, 
+    .device-field select {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 11px 14px !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 10px !important;
+      font-family: inherit !important;
+      font-size: 0.92rem !important;
+      color: #0f172a !important;
+      background-color: #ffffff !important;
+      outline: none !important;
+    }
+
+    .device-field input:focus, 
+    .device-field select:focus {
+      border-color: #d97706 !important;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15) !important;
+    }
+
+    @media (max-width: 1200px) {
+      .device-row-top { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    }
+
+    @media (max-width: 640px) {
+      .device-row-top { grid-template-columns: minmax(0, 1fr) !important; }
+    }
+
+    .table-container { margin-top: 1rem; width: 100%; overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+    .data-table th, .data-table td { padding: 0.85rem 1rem; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+    .data-table th { background-color: #f9fafb; font-weight: 700; color: #374151; white-space: nowrap; }
+    .badge-category { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; background-color: #e0f2fe; color: #0369a1; }
+    .badge-furniture { background-color: #fef3c7; color: #b45309; }
+    
+    .btn-action { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.35rem 0.65rem; font-size: 0.8rem; font-weight: 600; border-radius: 6px; border: none; cursor: pointer; transition: all 0.2s ease; }
+    .btn-delete { background-color: #fee2e2; color: #dc2626; }
+    .btn-delete:hover { background-color: #fca5a5; }
+
+    .empty-state { text-align: center; color: #6b7280; font-style: italic; padding: 2rem 1rem !important; }
+    
+    .form-alert { padding: 0.85rem 1.1rem; border-radius: 8px; font-size: 0.90rem; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+    .form-alert.success { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    .form-alert.error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="layout-dashboard"></i></div>
+      <div>
+        <div class="brand-title">NYIREFAMI</div>
+        <div class="brand-subtitle">Crop & Asset Management</div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item"><a href="homepage.html" class="menu-link"><div class="link-left"><i data-lucide="home"></i> Operational Hub</div></a></li>
+      <li class="menu-item">
+        <details class="sidebar-accordion">
+          <summary class="menu-link">
+            <div class="link-left"><i data-lucide="wheat"></i> Crop Management</div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </summary>
+          <div class="sub-menu">
+            <a href="raw_intake.html"><i data-lucide="truck"></i> Raw Material Intake</a>
+            <a href="cleaning.html"><i data-lucide="sparkles"></i> Cleaning & Sorting</a>
+            <a href="production.html"><i data-lucide="factory"></i> Production & Milling</a>
+            <a href="package_inventory.html"><i data-lucide="box"></i> Packaging & Consumables</a>
+            <a href="sale.html"><i data-lucide="shopping-cart"></i> Sales & Distribution</a>
+          </div>
+        </details>
+      </li>
+      <li class="menu-item active">
+        <a href="device.html" class="menu-link active-tab">
+          <div class="link-left"><i data-lucide="cpu"></i> Device Management</div>
+        </a>
+      </li>
+      <li class="menu-item"><a href="excel.html" class="menu-link"><div class="link-left"><i data-lucide="file-spreadsheet"></i> System Reports</div></a></li>
+    </ul>
+
+    <!-- AFTER (Dynamic) -->
+     <div class="sidebar-footer">
+      <p>Logged in: <strong id="sidebarUserName">Loading...</strong></p>
+       <a href="logout.php" style="color:#ef4444; font-weight:700; font-size:0.8rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem;">
+        <i data-lucide="log-out" style="width:14px; height:14px;"></i> Sign Out
+        </a>
+         <p class="copyright" style="margin-top:0.5rem;">&copy; 2026 Nyirefami Ltd.</p>
+        </div>
+  </aside>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="main-wrapper">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>Device & Asset Management</h1>
+      </div>
+      <div class="user-badge"><i data-lucide="cpu"></i> Asset Registry</div>
+    </div>
+
+    <!-- ASSET REGISTRATION FORM -->
+    <section class="device-main-card">
+      <div class="card-header" style="margin-bottom: 1.25rem;">
+        <h2><i data-lucide="hard-drive"></i> Hardware & Asset Registration</h2>
+      </div>
+
+      <form id="deviceForm">
+        <div id="formAlert" class="form-alert" style="display: none;"></div>
+
+        <div class="device-row-top">
+          <div class="device-field">
+            <label for="assetCategory"><i data-lucide="layers" class="label-icon"></i> Asset Category</label>
+            <select id="assetCategory" name="assetCategory" required>
+              <option value="" disabled selected>Select category</option>
+              <option value="IT Device">IT Device</option>
+              <option value="Furniture">Furniture</option>
+            </select>
+          </div>
+
+          <div class="device-field">
+            <label for="deviceId"><i data-lucide="qr-code" class="label-icon"></i> Device ID / Tag</label>
+            <input type="text" id="deviceId" name="deviceId" placeholder="e.g., DEV-2026-001" required />
+          </div>
+
+          <div class="device-field">
+            <label for="departmentName"><i data-lucide="building" class="label-icon"></i> Department Name</label>
+            <input type="text" id="departmentName" name="departmentName" placeholder="e.g., IT / Accounting" required />
+          </div>
+
+          <div class="device-field">
+            <label for="assignedPerson"><i data-lucide="user" class="label-icon"></i> Assigned Person</label>
+            <input type="text" id="assignedPerson" name="assignedPerson" placeholder="e.g., John Doe" required />
+          </div>
+        </div>
+
+        <div class="device-row-bottom">
+          <button type="submit" class="btn-primary-gold" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 2.5rem;"><i data-lucide="save"></i> Register Asset</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ASSIGNED ASSETS DATA DISPLAY TABLE -->
+    <section class="device-main-card">
+      <div class="card-header" style="margin-bottom: 1.25rem;">
+        <h2><i data-lucide="list"></i> Assigned Assets Log</h2>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Device ID</th>
+              <th>Category</th>
+              <th>Department</th>
+              <th>Assigned Person</th>
+              <th>Date Assigned</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="assignedAssetsTableBody">
+            <tr id="emptyRow">
+              <td colspan="6" class="empty-state">Loading assigned assets from database...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const deviceForm = document.getElementById('deviceForm');
+    const tableBody = document.getElementById('assignedAssetsTableBody');
+
+    document.addEventListener('DOMContentLoaded', loadAssets);
+
+    function showAlert(elementId, message, type = 'success', duration = 4000) {
+      const alertBox = document.getElementById(elementId);
+      if (!alertBox) return;
+      alertBox.className = `form-alert ${type}`;
+      alertBox.innerHTML = message;
+      alertBox.style.display = 'flex';
+      if (duration > 0) {
+        setTimeout(() => { alertBox.style.display = 'none'; }, duration);
+      }
+    }
+
+    function loadAssets() {
+      fetch('fetch_devices.php')
+        .then(res => res.json())
+        .then(data => {
+          tableBody.innerHTML = '';
+          if (data.success && data.data && data.data.length > 0) {
+            data.data.forEach(asset => appendRow(asset));
+          } else if (data.success) {
+            tableBody.innerHTML = `<tr id="emptyRow"><td colspan="6" class="empty-state">No assets registered yet. Fill out the form above to log assigned assets.</td></tr>`;
+          } else {
+            tableBody.innerHTML = `<tr id="emptyRow"><td colspan="6" class="empty-state" style="color:#dc2626; font-weight:600;">Failed to load assets: ${data.message || 'Database error'}</td></tr>`;
+          }
+          lucide.createIcons();
+        })
+        .catch(err => {
+          tableBody.innerHTML = `<tr id="emptyRow"><td colspan="6" class="empty-state" style="color:#dc2626; font-weight:600;">Failed to connect to server.</td></tr>`;
+        });
+    }
+
+    function appendRow(asset, prepend = false) {
+      const badgeClass = asset.category === 'Furniture' ? 'badge-category badge-furniture' : 'badge-category';
+      const newRow = document.createElement('tr');
+      newRow.setAttribute('data-id', asset.id);
+      newRow.innerHTML = `
+        <td><code>${asset.deviceId}</code></td>
+        <td><span class="${badgeClass}">${asset.category}</span></td>
+        <td>${asset.department}</td>
+        <td>${asset.person}</td>
+        <td>${asset.assignedDate}</td>
+        <td>
+          <button type="button" class="btn-action btn-delete" onclick="deleteAsset(this, ${asset.id})"><i data-lucide="trash-2"></i> Delete</button>
+        </td>
+      `;
+      if (prepend) tableBody.prepend(newRow);
+      else tableBody.appendChild(newRow);
+    }
+
+    deviceForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      fetch('save_device.php', { method: 'POST', body: new FormData(deviceForm) })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showAlert('formAlert', data.message, 'success');
+          const emptyRow = document.getElementById('emptyRow');
+          if (emptyRow) emptyRow.remove();
+          appendRow(data.data, true);
+          lucide.createIcons();
+          deviceForm.reset();
+        } else {
+          showAlert('formAlert', data.message, 'error');
+        }
+      });
+    });
+
+    function deleteAsset(button, id) {
+      const formData = new FormData();
+      formData.append('id', id);
+      fetch('delete_device.php', { method: 'POST', body: formData })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          button.closest('tr').remove();
+          checkEmptyTable();
+          showAlert('formAlert', 'Asset record deleted successfully.', 'success');
+        } else {
+          showAlert('formAlert', data.message, 'error');
+        }
+      });
+    }
+
+    function checkEmptyTable() {
+      if (tableBody.querySelectorAll('tr:not(#emptyRow)').length === 0) {
+        tableBody.innerHTML = `<tr id="emptyRow"><td colspan="6" class="empty-state">No assets registered yet. Fill out the form above to log assigned assets.</td></tr>`;
+      }
+    }
+    // Check session and update user name on load
+function checkUserSession() {
+  fetch('get_dashboard_stats.php')
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'unauthorized') {
+        window.location.href = 'login.html';
+        return;
+      }
+      if (data.status === 'success' && data.user) {
+        const sidebarUserEl = document.getElementById('sidebarUserName');
+        if (sidebarUserEl) {
+          sidebarUserEl.textContent = data.user.full_name;
+        }
+      }
+    })
+    .catch(err => console.error('Session check error:', err));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checkUserSession();
+});
+  </script>
+</body>
+</html>

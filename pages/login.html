@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyirefami - System Login</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .login-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    }
+    .login-brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .brand-icon-box {
+      width: 56px;
+      height: 56px;
+      background: #ecfdf5;
+      color: #047857;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+      border: 1px solid #a7f3d0;
+    }
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #065f46;
+      letter-spacing: 0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.85rem;
+      color: #6b7280;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      color: #9ca3af;
+      width: 18px;
+      height: 18px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 2.75rem 0.75rem 2.75rem; /* Padded right for toggle icon */
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+      color: #1f2937;
+    }
+    .form-control:focus {
+      border-color: #047857;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
+    }
+    .password-toggle-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9ca3af;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: color 0.2s ease;
+    }
+    .password-toggle-btn:hover {
+      color: #047857;
+    }
+    .btn-login {
+      width: 100%;
+      background: #047857;
+      color: #ffffff;
+      border: none;
+      padding: 0.85rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s ease;
+      margin-top: 1.5rem;
+    }
+    .btn-login:hover {
+      background: #065f46;
+    }
+    .btn-login:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    .alert-danger {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #f87171;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .login-footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-icon-box">
+        <i data-lucide="layout-dashboard" style="width: 28px; height: 28px;"></i>
+      </div>
+      <div class="brand-title">NYIREFAMI</div>
+      <div class="brand-subtitle">Crop & Asset Management System</div>
+    </div>
+
+    <!-- Error Alert Container -->
+    <div id="errorAlert" class="alert-danger" style="display: none;">
+      <i data-lucide="alert-circle" style="width: 18px; height: 18px; flex-shrink: 0;"></i>
+      <span id="errorMessage">Invalid credentials</span>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <div class="input-wrapper">
+          <i data-lucide="user" class="input-icon"></i>
+          <input type="text" id="username" name="username" class="form-control" style="padding-right: 1rem;" placeholder="Enter your username" required autofocus />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required />
+          
+          <!-- Password Visibility Toggle Button -->
+          <button type="button" id="togglePasswordBtn" class="password-toggle-btn" title="Show / Hide Password">
+            <i data-lucide="eye" id="togglePasswordIcon" style="width: 18px; height: 18px;"></i>
+          </button>
+        </div>
+      </div>
+      <!-- 🔒 ADD THE "REMEMBER ME" CHECKBOX HERE -->
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; font-size: 0.88rem; color: #4b5563;">
+        <input type="checkbox" id="remember" name="remember" style="width: 16px; height: 16px; accent-color: #047857; cursor: pointer;">
+        <label for="remember" style="cursor: pointer; user-select: none;">Remember Me on this device</label>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-login">
+        <i data-lucide="log-in" style="width: 18px; height: 18px;"></i>
+        Sign In to Portal
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>&copy; 2026 Nyirefami Ltd. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+    // Password Toggle Functionality
+    togglePasswordBtn.addEventListener('click', function() {
+      const isPassword = passwordInput.getAttribute('type') === 'password';
+      
+      if (isPassword) {
+        passwordInput.setAttribute('type', 'text');
+        togglePasswordIcon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        passwordInput.setAttribute('type', 'password');
+        togglePasswordIcon.setAttribute('data-lucide', 'eye');
+      }
+      
+      // Re-render Lucide icon
+      lucide.createIcons();
+    });
+
+    // Form Submission Handling
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Authenticating...';
+      errorAlert.style.display = 'none';
+
+      const formData = new FormData(loginForm);
+
+      fetch('login_process.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          window.location.href = data.redirect || 'homepage.html';
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i data-lucide="log-in" style="width: 18px; height: 18px;"></i> Sign In to Portal';
+          lucide.createIcons();
+
+          errorMessage.textContent = data.message || 'Invalid login details.';
+          errorAlert.style.display = 'flex';
+        }
+      })
+      .catch(err => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="log-in" style="width: 18px; height: 18px;"></i> Sign In to Portal';
+        lucide.createIcons();
+
+        errorMessage.textContent = 'Server connection error. Please try again.';
+        errorAlert.style.display = 'flex';
+      });
+    });
+  </script>
+</body>
+</html>
